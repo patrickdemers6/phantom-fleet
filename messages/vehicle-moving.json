@@ -1,0 +1,40 @@
+[
+  {
+    "txid": "1",
+    "topic": "V",
+    "vin": "TESLA000000000001",
+    "device_type": "vehicle_device",
+    "createdAt": 1,
+    "messageId": "id1",
+    "data": [
+      {
+        "key": "Location",
+        "value": {
+          "locationValue": {
+            "latitude": -37.412374,
+            "longitude": 122.145867
+          }
+        }
+      }
+    ]
+  },
+  {
+    "txid": "2",
+    "topic": "V",
+    "vin": "TESLA000000000001",
+    "device_type": "vehicle_device",
+    "createdAt": 2,
+    "messageId": "id2",
+    "data": [
+      {
+        "key": "Location",
+        "value": {
+          "locationValue": {
+            "latitude": -38.412374,
+            "longitude": 124.145867
+          }
+        }
+      }
+    ]
+  }
+]

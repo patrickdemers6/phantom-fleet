@@ -1,0 +1,17 @@
+{
+  "server": {
+    "host": "app",
+    "port": 4443,
+    "tls": {
+      "server_cert": "../fleet-telemetry/test/integration/test-certs/vehicle_device.CA.cert",
+      "server_key": "../fleet-telemetry/test/integration/test-certs/vehicle_device.CA.key"
+    }
+  },
+  "mode": "file",
+  "source": {
+    "file": {
+      "path": "./messages/change-vehicle-name.json",
+      "delay": 1
+    }
+  }
+}
