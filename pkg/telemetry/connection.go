@@ -7,20 +7,26 @@ import (
 	"time"
 
 	"phantom-fleet/config"
-	"phantom-fleet/pkg/msg"
+	message "phantom-fleet/pkg/msg"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/gorilla/websocket"
 	"github.com/teslamotors/fleet-telemetry/messages/tesla"
 )
 
-// Connection represents a fleet telemetry server connecton.
-type Connection struct {
+// Connection represents a connection to remote server.
+type Connection interface {
+	Publish(msg *message.Message) error
+	Shutdown()
+}
+
+// MTLS represents an mTLS connection to a fleet-telemetry server.
+type MTLS struct {
 	conn *websocket.Conn
 }
 
 // NewConnection creates a connection to a fleet-telemetry server.
-func NewConnection(c *config.Config) (*Connection, error) {
+func NewConnection(c *config.Config) (Connection, error) {
 	cert, err := tls.LoadX509KeyPair(c.Server.TLS.ServerCert, c.Server.TLS.ServerKey)
 	if err != nil {
 		panic(err)
@@ -36,22 +42,22 @@ func NewConnection(c *config.Config) (*Connection, error) {
 		panic(err)
 	}
 
-	return &Connection{
+	return &MTLS{
 		conn: conn,
 	}, nil
 }
 
 // Shutdown closes the connection to the server.
-func (s *Connection) Shutdown() {
-	_ = s.conn.Close()
+func (mtls *MTLS) Shutdown() {
+	_ = mtls.conn.Close()
 }
 
 // Publish sends telemetry data to the server.
-func (s *Connection) Publish(msg *message.Message) error {
+func (mtls *MTLS) Publish(msg *message.Message) error {
 	b, err := proto.Marshal(msg.Payload())
 	if err != nil {
 		return fmt.Errorf("failed to marshal payload")
 	}
 
-	return s.conn.WriteMessage(websocket.BinaryMessage, tesla.FlatbuffersStreamToBytes([]byte(fmt.Sprintf("%s.%s", msg.DeviceType, msg.VIN)), []byte(msg.Topic), []byte(msg.TxID), b, 1, []byte(msg.MessageID), []byte(msg.DeviceType), []byte(msg.VIN), uint64(time.Now().UnixMilli())))
+	return mtls.conn.WriteMessage(websocket.BinaryMessage, tesla.FlatbuffersStreamToBytes([]byte(fmt.Sprintf("%s.%s", msg.DeviceType, msg.VIN)), []byte(msg.Topic), []byte(msg.TxID), b, 1, []byte(msg.MessageID), []byte(msg.DeviceType), []byte(msg.VIN), uint64(time.Now().UnixMilli())))
 }

@@ -9,11 +9,13 @@ import (
 	"phantom-fleet/pkg/telemetry"
 )
 
+// Executor runs a given mode
 type Executor interface {
-	Run(conn *telemetry.Connection, config *config.Config) error
+	Run(conn telemetry.Connection, config *config.Config) error
 }
 
-func Run(conn *telemetry.Connection, config *config.Config) error {
+// Run executes a run mode based on config.Mode
+func Run(conn telemetry.Connection, config *config.Config) error {
 	switch config.Mode {
 	case "file":
 		return file.Run(conn, config)
