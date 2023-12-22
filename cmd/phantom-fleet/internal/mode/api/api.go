@@ -6,6 +6,7 @@ import (
 	"phantom-fleet/pkg/telemetry"
 )
 
-func Run(conn *telemetry.Connection, config *config.Config) error {
+// Run executes api mode. Not yet implemneted.
+func Run(conn telemetry.Connection, config *config.Config) error {
 	return fmt.Errorf("not implemented")
 }

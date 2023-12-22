@@ -9,7 +9,8 @@ import (
 	"phantom-fleet/pkg/telemetry"
 )
 
-func Run(conn *telemetry.Connection, config *config.Config) error {
+// Run executes file mode
+func Run(conn telemetry.Connection, config *config.Config) error {
 	msgs, err := message.LoadFromJson(config.Source.File.Path, config.Fs)
 	if err != nil {
 		return fmt.Errorf("error reading json message file: %w", err)
@@ -20,7 +21,7 @@ func Run(conn *telemetry.Connection, config *config.Config) error {
 	return nil
 }
 
-func sendMessages(s *telemetry.Connection, messages []*message.Message, delay int) {
+func sendMessages(s telemetry.Connection, messages []*message.Message, delay int) {
 	for i, m := range messages {
 		s.Publish(m)
 		if i != len(messages)-1 {
