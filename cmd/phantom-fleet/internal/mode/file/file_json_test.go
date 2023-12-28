@@ -6,7 +6,7 @@ const (
 			{
 				"txid": "1",
 				"topic": "V",
-				"vin": "TESLA000000000001",
+				"vin": "device-1",
 				"device_type": "vehicle_device",
 				"createdAt": 1,
 				"messageId": "id1",
@@ -17,7 +17,7 @@ const (
 			{
 				"txid": "2",
 				"topic": "V",
-				"vin": "TESLA000000000001",
+				"vin": "device-1",
 				"device_type": "vehicle_device",
 				"createdAt": 2,
 				"messageId": "id2",

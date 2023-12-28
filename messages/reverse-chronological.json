@@ -2,7 +2,7 @@
   {
     "txid": "1",
     "topic": "V",
-    "vin": "TESLA000000000001",
+    "vin": "device-1",
     "device_type": "vehicle_device",
     "createdAt": 10,
     "messageId": "id1",
@@ -21,7 +21,7 @@
   {
     "txid": "2",
     "topic": "V",
-    "vin": "TESLA000000000001",
+    "vin": "device-1",
     "device_type": "vehicle_device",
     "createdAt": 5,
     "messageId": "id2",
