@@ -3,8 +3,8 @@
     "host": "app",
     "port": 4443,
     "tls": {
-      "server_cert": "../fleet-telemetry/test/integration/test-certs/vehicle_device.CA.cert",
-      "server_key": "../fleet-telemetry/test/integration/test-certs/vehicle_device.CA.key"
+      "server_cert": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.cert",
+      "server_key": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.key"
     }
   },
   "mode": "file",

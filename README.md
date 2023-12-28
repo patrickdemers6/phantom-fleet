@@ -16,7 +16,7 @@ At present, only one source is supported:
 
 1. Have a `fleet-telemetry` server running which you would like to send data to.
 2. Create `config.json`
-   - Certificates are required as fleet-telemetry requires mTLS connections. Generate test certificates in `fleet-telemetry` by running `make generate-certs`. The created `vehicle_device.CA.cert` and `vehicle_device.CA.key` files should be referenced in `config.json`.
+   - Certificates are required as fleet-telemetry requires mTLS connections. Generate test certificates in `fleet-telemetry` by running `make generate-certs`. The created `vehicle_device.device-1.cert` and `vehicle_device.device-1.key` files should be referenced in `config.json`.
    - A hostname is required and an IP address will fail. [See here for help on Linux](https://unix.stackexchange.com/questions/55691/how-to-add-an-ip-to-hostname-file).
 3. Build phantom-fleet: run `make build`.
 4. Run `./phantom-fleet`. This uses `config.json` for configuration by default. See below for customization options.
@@ -31,8 +31,8 @@ The configuration file has the following general format:
     "host": "app",
     "port": 4443,
     "tls": {
-      "server_cert": "../fleet-telemetry/test/integration/test-certs/vehicle_device.CA.cert",
-      "server_key": "../fleet-telemetry/test/integration/test-certs/vehicle_device.CA.key"
+      "server_cert": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.cert",
+      "server_key": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.key"
     }
   },
   "mode": "file", // file or api, mode defaults to api if not set
