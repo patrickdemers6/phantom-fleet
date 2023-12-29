@@ -3,11 +3,12 @@ package message_test
 import (
 	"os"
 
+	message "phantom-fleet/pkg/msg"
+	"phantom-fleet/test/data"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
-
-	message "phantom-fleet/pkg/msg"
 )
 
 var _ = Describe("Message", func() {
@@ -21,7 +22,7 @@ var _ = Describe("Message", func() {
 
 	Describe("LoadConfig", func() {
 		It("loads message", func() {
-			err := afero.WriteFile(fs, "messages.json", []byte(twoMessages), os.ModePerm)
+			err := afero.WriteFile(fs, "messages.json", []byte(data.JsonMessageArray), os.ModePerm)
 			Expect(err).To(BeNil())
 
 			msgs, err := message.LoadFromJson("messages.json", fs)

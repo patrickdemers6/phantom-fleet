@@ -25,4 +25,6 @@ const (
 			}
 		]
 	`
+
+	invalidJson = `{ "invalid": json }`
 )

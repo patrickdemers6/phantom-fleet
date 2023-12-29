@@ -10,43 +10,34 @@ import (
 	"github.com/spf13/afero"
 )
 
-// FileSource defines the configuration for the file source.
-type FileSource struct {
-	Path  string `json:"path"`
-	Delay int    `json:"delay"`
-}
-
-// APIConfig defines the configuration for the API source.
-type APIConfig struct {
-	Port int `json:"port"`
-}
-
-// Source defines configs for each data source possible.
-type Source struct {
-	File *FileSource `json:"file,omitempty"`
-	API  *APIConfig  `json:"api,omitempty"`
-}
-
 // Config defines the phantom-fleet configuration.
 type Config struct {
-	Server   ServerConfig `json:"server"`
-	Source   Source       `json:"source"`
-	Provider string       `json:"provider"`
-	Mode     string       `json:"mode"`
+	Provider string          `json:"provider"`
+	Mode     string          `json:"mode"`
+	File     *FileModeConfig `json:"file,omitempty"`
+	API      *APIModeConfig  `json:"api,omitempty"`
 	Fs       afero.Fs
+}
+
+// FileModeConfig defines the configuration for the file source.
+type FileModeConfig struct {
+	Path   string       `json:"path"`
+	Delay  int          `json:"delay"`
+	Server ServerConfig `json:"server"`
+}
+
+// APIModeConfig defines the configuration for the API source.
+type APIModeConfig struct {
+	Port int `json:"port"`
+	// Server defines initial connection configuration, but can be changed for api at runtime.
+	Server ServerConfig `json:"server"`
 }
 
 // ServerConfig represents the server configuration.
 type ServerConfig struct {
-	Host string    `json:"host,omitempty"`
-	Port int       `json:"port,omitempty"`
-	TLS  TLSServer `json:"tls,omitempty"`
-}
-
-// TLSServer represents the TLS configuration for the server.
-type TLSServer struct {
-	ServerCert string `json:"server_cert,omitempty"`
-	ServerKey  string `json:"server_key,omitempty"`
+	Host         string `json:"host,omitempty"`
+	Port         int    `json:"port,omitempty"`
+	TlsDirectory string `json:"tls_directory,omitempty"`
 }
 
 // LoadConfig reads the configuration.
@@ -81,8 +72,8 @@ func LoadConfig(fs afero.Fs) (*Config, error) {
 		return nil, fmt.Errorf("failed to decode config: %v", err)
 	}
 
-	if config.Source.File != nil && delay != -1 {
-		config.Source.File.Delay = delay
+	if config.File != nil && delay != -1 {
+		config.File.Delay = delay
 	}
 
 	err = processArgs(&config)
@@ -107,20 +98,20 @@ func processArgs(config *Config) error {
 		config.Mode = args[0]
 		if config.Mode == "file" {
 			if len(args) == 2 {
-				if config.Source.File == nil {
-					config.Source.File = &FileSource{}
+				if config.File == nil {
+					config.File = &FileModeConfig{}
 				}
 				if strings.HasSuffix(args[1], ".json") {
-					config.Source.File.Path = args[1]
+					config.File.Path = args[1]
 				} else {
-					config.Source.File.Path = fmt.Sprintf("./messages/%s.json", args[1])
+					config.File.Path = fmt.Sprintf("./messages/%s.json", args[1])
 				}
 			} else {
 				return fmt.Errorf("expected message name or path to message file")
 			}
 		} else if config.Mode == "api" {
-			if config.Source.API == nil {
-				config.Source.API = &APIConfig{
+			if config.API == nil {
+				config.API = &APIModeConfig{
 					Port: 8080,
 				}
 			}
@@ -132,28 +123,25 @@ func processArgs(config *Config) error {
 }
 
 func (c *Config) Validate() error {
-	if c.Server.TLS.ServerCert == "" {
-		return fmt.Errorf("server cert is required")
+	if c.File.Server.TlsDirectory == "" {
+		return fmt.Errorf("file mode tls directory is required")
 	}
-	if c.Server.TLS.ServerKey == "" {
-		return fmt.Errorf("server key is required")
-	}
-	if c.Server.Port == 0 {
+	if c.File.Server.Port == 0 {
 		return fmt.Errorf("server port is required")
 	}
-	if c.Server.Port < 0 {
+	if c.File.Server.Port < 0 {
 		return fmt.Errorf("server port must be positive")
 	}
-	if c.Server.Host == "" {
+	if c.File.Server.Host == "" {
 		return fmt.Errorf("host is required")
 	}
-	if c.Source.File != nil && c.Source.File.Delay < 0 {
+	if c.File != nil && c.File.Delay < 0 {
 		return fmt.Errorf("delay must be positive")
 	}
-	if c.Source.API != nil && c.Source.API.Port == 0 {
+	if c.API != nil && c.API.Port == 0 {
 		return fmt.Errorf("api port is required")
 	}
-	if c.Source.API != nil && c.Source.API.Port < 0 {
+	if c.API != nil && c.API.Port < 0 {
 		return fmt.Errorf("api port must be positive")
 	}
 	if c.Mode != "api" && c.Mode != "file" {

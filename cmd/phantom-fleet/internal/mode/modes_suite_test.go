@@ -1,4 +1,4 @@
-package api_test
+package mode_test
 
 import (
 	"testing"
@@ -9,5 +9,5 @@ import (
 
 func TestConfig(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "API Mode Suite")
+	RunSpecs(t, "Run Modes Suite")
 }

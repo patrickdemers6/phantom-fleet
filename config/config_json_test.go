@@ -2,156 +2,166 @@ package config_test
 
 const (
 	completeConfig = `{
-		"server": {
-			"host": "app",
-			"port": 4443,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
-			}
-		},
 		"mode": "file",
-		"source": {
 			"file": {
 				"path": "test_config.json",
-				"delay": 10
+				"delay": 10,
+				"server": {
+					"host": "app",
+					"port": 4443,
+					"tls_directory": "anything"
+				}
+			},
+			"api": {
+				"port": 3000,
+				"server": {
+					"host": "app",
+					"port": 4443
+				}
 			}
 		}
 	}`
 
 	noModeConfig = `{
-		"server": {
-			"host": "app",
-			"port": 4443,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "app",
+				"port": 4443,
+				"tls_directory": "anything"
 			}
+		},
+		"api": {
+			"port": 3000
 		}
 	}`
 
 	negativeDelay = `{
-		"server": {
-			"host": "app",
-			"port": 4443,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
+		"mode": "file",
+		"file": {
+			"path": "test_config.json",
+			"delay": -1,
+			"server": {
+				"host": "app",
+				"port": 4443,
+				"tls_directory": "anything"
 			}
 		},
-		"mode": "file",
-		"source": {
-			"file": {
-				"path": "test_config.json",
-				"delay": -1
-			}
+		"api": {
+			"port": 3000
 		}
 	}`
 
 	invalidMode = `{
-		"server": {
-			"host": "app",
-			"port": 4443,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
+		"mode": "invalid-mode",
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "app",
+				"port": 4443,
+				"tls_directory": "anything"
 			}
 		},
-		"mode": "invalid",
-		"source": {
-			"file": {
-				"path": "test_config.json",
-				"delay": 1
-			}
+		"api": {
+			"port": 3000
 		}
 	}`
 
-	missingServerCert = `{
-		"server": {
-			"host": "app",
-			"port": 4443,
-			"tls": {
-				"server_cert": "",
-				"server_key": "anything"
+	missingTlsDirectory = `{
+		"mode": "file",
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "app",
+				"port": 4443,
+				"tls_directory": ""
 			}
+		},
+		"api": {
+			"port": 3000
 		}
 	}`
 
-	missingServerKey = `{
-		"server": {
-			"host": "app",
-			"port": 4443,
-			"tls": {
-				"server_cert": "something",
-				"server_key": ""
+	negativeFileServerPort = `{
+		"mode": "file",
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "app",
+				"port": -4443,
+				"tls_directory": "anything"
 			}
-		}
-	}`
-
-	negativePort = `{
-		"server": {
-			"host": "app",
-			"port": -1,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
-			}
+		},
+		"api": {
+			"port": 3000
 		}
 	}`
 
 	zeroServerPort = `{
-		"server": {
-			"host": "app",
-			"port": 0,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
+		"mode": "file",
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "app",
+				"port": 0,
+				"tls_directory": "anything"
 			}
+		},
+		"api": {
+			"port": 3000
 		}
 	}`
 
 	missingHost = `{
-		"server": {
-			"host": "",
-			"port": 443,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
+		"mode": "file",
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "",
+				"port": 4443,
+				"tls_directory": "anything"
 			}
+		},
+		"api": {
+			"port": 3000
 		}
 	}`
 
 	zeroApiPort = `{
-		"server": {
-			"host": "app",
-			"port": 1,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
+		"mode": "api",
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "app",
+				"port": 4443,
+				"tls_directory": "anything"
 			}
 		},
-		"mode": "api",
-		"source": {
-			"api": {
-				"port": 0
-			}
+		"api": {
+			"port": 0
 		}
 	}`
 
 	negativeApiPort = `{
-		"server": {
-			"host": "app",
-			"port": 1,
-			"tls": {
-				"server_cert": "something",
-				"server_key": "anything"
+		"mode": "file",
+		"file": {
+			"path": "test_config.json",
+			"delay": 10,
+			"server": {
+				"host": "app",
+				"port": 4443,
+				"tls_directory": "anything"
 			}
 		},
-		"mode": "api",
-		"source": {
-			"api": {
-				"port": -1
-			}
+		"api": {
+			"port": -3000
 		}
 	}`
 )

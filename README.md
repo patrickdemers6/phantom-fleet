@@ -8,9 +8,10 @@ Are you integrating with Tesla's fleet-telemetry server but don't have a fleet o
 
 Phantom Fleet takes messages from input sources and sends the messages to the fleet-telemetry server. These messages simulate data that would be received from a real life vehicle.
 
-At present, only one source is supported:
+At present, two source are supported:
 
 - **File**: A JSON file with an array of messages. See an example in [messages/change-vehicle-name.json](messages/change-vehicle-name.json)
+- **API**: Messages can be sent through an exposed REST API. [More details](API.md)
 
 **Configuring a File Source**
 
@@ -27,23 +28,21 @@ The configuration file has the following general format:
 
 ```json
 {
-  "server": {
-    "host": "app",
-    "port": 4443,
-    "tls": {
-      "server_cert": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.cert",
-      "server_key": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.key"
+  "mode": "file", // mode or api
+  "file": {
+    "path": "./messages/change-vehicle-name.json", // path of file to run
+    "delay": 1,
+    "server": {
+      "host": "app",
+      "port": 4443,
+      "tls_directory": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.cert"
     }
   },
-  "mode": "file", // file or api, mode defaults to api if not set
-  "source": {
-    "file": {
-      "path": "./messages/change-vehicle-name.json", // path to json file with messages
-      "delay": 1 // time to wait between sending each message
-    },
-    "api": {
-      // note: api not implemented yet :)
-      "port": 8080
+  "api": {
+    "port": 8080,
+    "server": {
+      "host": "app",
+      "port": 4443
     }
   }
 }
@@ -81,4 +80,4 @@ This project is in its early stages and may be unstable.
 
 - Improve testing
 - Improve documentation for crafting messages
-- Expose a REST API for sending commands
+- Have a web interface to interact with API
