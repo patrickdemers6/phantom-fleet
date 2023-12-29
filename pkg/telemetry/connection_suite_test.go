@@ -9,5 +9,5 @@ import (
 
 func TestConfig(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Message Suite")
+	RunSpecs(t, "Fleet Telemetry Connections Suite")
 }
