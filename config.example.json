@@ -1,17 +1,19 @@
 {
-  "server": {
-    "host": "app",
-    "port": 4443,
-    "tls": {
-      "server_cert": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.cert",
-      "server_key": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.key"
+  "mode": "file",
+  "file": {
+    "path": "./messages/change-vehicle-name.json",
+    "delay": 1,
+    "server": {
+      "host": "app",
+      "port": 4443,
+      "tls_directory": "../fleet-telemetry/test/integration/test-certs/vehicle_device.device-1.cert"
     }
   },
-  "mode": "file",
-  "source": {
-    "file": {
-      "path": "./messages/change-vehicle-name.json",
-      "delay": 1
+  "api": {
+    "port": 8080,
+    "server": {
+      "host": "app",
+      "port": 4443
     }
   }
 }

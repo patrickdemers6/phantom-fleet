@@ -32,8 +32,8 @@ var _ = Describe("Config", func() {
 
 			Expect(err).To(BeNil())
 			Expect(c).NotTo(BeNil())
-			Expect(c.Source.File.Path).To(Equal("test_config.json"))
-			Expect(c.Source.File.Delay).To(Equal(10))
+			Expect(c.File.Path).To(Equal("test_config.json"))
+			Expect(c.File.Delay).To(Equal(10))
 		})
 
 		It("overrides delay from cli arg", func() {
@@ -46,7 +46,7 @@ var _ = Describe("Config", func() {
 
 			Expect(err).To(BeNil())
 			Expect(c).NotTo(BeNil())
-			Expect(c.Source.File.Delay).To(Equal(2))
+			Expect(c.File.Delay).To(Equal(2))
 		})
 
 		Context("mode file", func() {
@@ -60,7 +60,7 @@ var _ = Describe("Config", func() {
 
 				Expect(err).To(BeNil())
 				Expect(c).NotTo(BeNil())
-				Expect(c.Source.File.Path).To(Equal("./messages/test.json"))
+				Expect(c.File.Path).To(Equal("./messages/test.json"))
 			})
 
 			It("overrides path from cli arg", func() {
@@ -73,7 +73,7 @@ var _ = Describe("Config", func() {
 
 				Expect(err).To(BeNil())
 				Expect(c).NotTo(BeNil())
-				Expect(c.Source.File.Path).To(Equal("test-a.json"))
+				Expect(c.File.Path).To(Equal("test-a.json"))
 			})
 
 			It("errors on too many unnamed args", func() {
@@ -132,9 +132,8 @@ var _ = Describe("Config", func() {
 		},
 			Entry("fail on negative delay", negativeDelay, "delay must be positive"),
 			Entry("fail on invalid mode", invalidMode, "invalid mode, expected 'api' or 'file'"),
-			Entry("fail on missing server cert", missingServerCert, "server cert is required"),
-			Entry("fail on missing server key", missingServerKey, "server key is required"),
-			Entry("fail on negative server port", negativePort, "server port must be positive"),
+			Entry("fail on missing file mode server tls directory", missingTlsDirectory, "file mode tls directory is required"),
+			Entry("fail on negative server port", negativeFileServerPort, "server port must be positive"),
 			Entry("fail on zero server port", zeroServerPort, "server port is required"),
 			Entry("fail on empty host", missingHost, "host is required"),
 			Entry("fail on zero api port", negativeApiPort, "api port must be positive"),

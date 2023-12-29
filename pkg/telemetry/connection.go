@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"time"
 
-	"phantom-fleet/config"
 	message "phantom-fleet/pkg/msg"
 
 	"github.com/golang/protobuf/proto"
@@ -26,20 +25,16 @@ type MTLS struct {
 }
 
 // NewConnection creates a connection to a fleet-telemetry server.
-func NewConnection(c *config.Config) (Connection, error) {
-	cert, err := tls.LoadX509KeyPair(c.Server.TLS.ServerCert, c.Server.TLS.ServerKey)
-	if err != nil {
-		panic(err)
-	}
+func NewConnection(host string, port int, cert tls.Certificate) (Connection, error) {
 	dialer := &websocket.Dialer{HandshakeTimeout: 1 * time.Second,
 		TLSClientConfig: &tls.Config{
 			RootCAs:            nil,
 			Certificates:       []tls.Certificate{cert},
 			InsecureSkipVerify: true,
 		}}
-	conn, _, err := dialer.Dial(fmt.Sprintf("wss://%s:%d", c.Server.Host, c.Server.Port), http.Header{})
+	conn, _, err := dialer.Dial(fmt.Sprintf("wss://%s:%d", host, port), http.Header{})
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	return &MTLS{
