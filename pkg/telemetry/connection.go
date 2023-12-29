@@ -20,9 +20,20 @@ type Connection interface {
 	Shutdown()
 }
 
+type WebSocketConn interface {
+	WriteMessage(messageType int, data []byte) error
+	Close() error
+}
+
 // MTLS represents an mTLS connection to a fleet-telemetry server.
 type MTLS struct {
-	conn *websocket.Conn
+	conn WebSocketConn
+}
+
+func NewMTLSWithMockConn(conn WebSocketConn) *MTLS {
+	return &MTLS{
+		conn: conn,
+	}
 }
 
 // NewConnection creates a connection to a fleet-telemetry server.
