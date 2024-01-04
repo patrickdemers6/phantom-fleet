@@ -26,7 +26,7 @@ At present, two source are supported:
 
 The configuration file has the following general format:
 
-```json
+```jsonc
 {
   "mode": "file", // mode or api
   "file": {
@@ -54,7 +54,7 @@ To set the location of the configuration file, the `--config` flag can be passed
 
 Below is a basic configuration to use when running fleet-telemetry. This enables the simple logger which prints messages to the stdout. Ensure the tls setup here references the same certs as the `phantom-fleet` configuration file.
 
-```json
+```jsonc
 {
   "host": "app",
   "port": 4443,
