@@ -25,6 +25,7 @@ func Run(config *config.Config) error {
 
 func contextMiddleware(mux *http.ServeMux, conn *telemetry.Manager) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		ctx := context.WithValue(r.Context(), constants.ContextManager, conn)
 		mux.ServeHTTP(w, r.WithContext(ctx))
 	})
