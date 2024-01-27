@@ -17,6 +17,10 @@ var (
 
 // SendDataHandler sends data to the telemetry server
 func SendDataHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodOptions {
+		handleCors(w, r)
+		return
+	}
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -43,6 +47,7 @@ func SendDataHandler(w http.ResponseWriter, r *http.Request) {
 	err = conn.Publish(message)
 	if err != nil {
 		http.Error(w, "error publishing to telemetry server", http.StatusInternalServerError)
+		return
 	}
 
 	w.WriteHeader(http.StatusOK)
