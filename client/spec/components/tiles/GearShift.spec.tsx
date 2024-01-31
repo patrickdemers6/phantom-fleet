@@ -20,7 +20,7 @@ describe('GearShift', () => {
         wrapContext(<GearShift vin={testVin} />, saveData, {
           fleetData: {
             'device-1': {
-              data: { Gear: { intValue: GEAR_PARK } },
+              data: { Gear: { shiftState: GEAR_PARK } },
               key: '',
               cert: '',
             },
@@ -68,7 +68,7 @@ describe('GearShift', () => {
       await act(() => fireEvent.click(screen.getByText('R')));
       expect(saveData).toHaveBeenCalledTimes(1);
       expect(saveData.mock.calls[0][0]).toMatchObject({
-        [testVin]: { data: { Gear: { intValue: GEAR_REVERSE } } },
+        [testVin]: { data: { Gear: { shiftState: GEAR_REVERSE } } },
       });
     });
   });
@@ -79,7 +79,7 @@ describe('GearShift', () => {
         wrapContext(<GearShift vin="device-1" />, saveData, {
           fleetData: {
             'device-1': {
-              data: { Gear: { intValue: GEAR_NEUTRAL } },
+              data: { Gear: { shiftState: GEAR_NEUTRAL } },
               key: '',
               cert: '',
             },

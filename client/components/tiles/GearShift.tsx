@@ -36,7 +36,7 @@ function GearShift({ vin }: { vin: string }) {
   const vehicleData = fleet?.fleetData[vin]?.data as KeyData;
 
   if (!vehicleData.Gear) return null;
-  const selected = vehicleData.Gear?.intValue;
+  const selected = vehicleData.Gear?.shiftState;
 
   let selectedIndex = primaryGears.findIndex((gear) => gear.value === selected);
   if (selectedIndex === -1) selectedIndex = 3;
@@ -50,7 +50,7 @@ function GearShift({ vin }: { vin: string }) {
     }
 
     closeMenu();
-    fleet?.setIntData(vin, 'Gear', gear.value);
+    fleet?.setShiftState(vin, 'Gear', gear.value);
   };
 
   return (
