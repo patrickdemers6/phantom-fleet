@@ -1,6 +1,9 @@
-"use client";
-import { useEffect, useState } from "react";
-import { AppContext, DataStore, FleetData, KeyData, ServerData } from "./types";
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import {
+  AppContext, ChargeState, DataStore, FleetData, KeyData, LocationValue, ServerData, ShiftState,
+} from './types';
 
 type ContextProviderProps = {
   children: React.ReactNode;
@@ -10,7 +13,7 @@ type ContextProviderProps = {
 
 const defaultData = {
   Gear: { intValue: 2 },
-  VehicleName: { stringValue: "First Vehicle" },
+  VehicleName: { stringValue: 'First Vehicle' },
 };
 
 const ContextProvider = ({
@@ -20,8 +23,8 @@ const ContextProvider = ({
 }: ContextProviderProps) => {
   const [fleetData, setFleetData] = useState<FleetData>({});
   const [serverData, setServerData] = useState<ServerData>({
-    host: "",
-    port: "",
+    host: '',
+    port: '',
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
@@ -51,15 +54,13 @@ const ContextProvider = ({
   }, [fleetData, serverData]);
 
   const setData = (vin: string, updated: KeyData) => {
-    setFleetData((d) => {
-      return {
-        ...d,
-        [vin]: {
-          ...d[vin],
-          data: { ...(d[vin].data || {}), ...updated },
-        },
-      };
-    });
+    setFleetData((d) => ({
+      ...d,
+      [vin]: {
+        ...d[vin],
+        data: { ...(d[vin].data || {}), ...updated },
+      },
+    }));
   };
 
   const setStringData = (vin: string, field: string, value: string) => {
@@ -70,10 +71,22 @@ const ContextProvider = ({
     setData(vin, { [field]: { intValue: value } });
   };
 
+  const setLocationValue = (vin: string, field: string, value: LocationValue) => {
+    setData(vin, { [field]: { locationValue: value } });
+  };
+
+  const setShiftState = (vin: string, field: string, value: ShiftState) => {
+    setData(vin, { [field]: { shiftState: value } });
+  };
+
+  const setChargeState = (vin: string, field: string, value: ChargeState) => {
+    setData(vin, { [field]: { chargeState: value } });
+  };
+
   const newVehicle = (vin: string) => {
     setFleetData((d) => ({
       ...d,
-      [vin]: { data: defaultData, key: "", cert: "" },
+      [vin]: { data: defaultData, key: '', cert: '' },
     }));
   };
 
@@ -105,10 +118,13 @@ const ContextProvider = ({
 
   return (
     <Context.Provider
-      value={{
+      value={useMemo(() => ({
         fleetData,
         setStringData,
         setIntData,
+        setLocationValue,
+        setShiftState,
+        setChargeState,
         setKey,
         setCert,
         newVehicle,
@@ -116,7 +132,7 @@ const ContextProvider = ({
         configureServer,
         server: serverData,
         isLoading,
-      }}
+      }), [fleetData, isLoading, serverData])}
     >
       {children}
     </Context.Provider>

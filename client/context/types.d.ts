@@ -1,11 +1,14 @@
 interface AppContext {
   fleetData: FleetData;
-  setStringData: (vin: vin, field: string, value: string) => void;
-  setIntData: (vin: vin, field: string, value: number) => void;
-  newVehicle: (vin: vin) => void;
-  setKey: (vin: vin, key: string) => void;
-  setCert: (vin: vin, cert: string) => void;
-  changeVin: (oldVin: vin, newVin: vin) => void;
+  setStringData: (vin: Vin, field: string, value: string) => void;
+  setIntData: (vin: Vin, field: string, value: number) => void;
+  setLocationValue: (vin: string, field: string, value: LocationValue) => void;
+  setChargeState: (vin: string, field: string, value: ChargeState) => void;
+  setShiftState: (vin: string, field: string, value: ShiftState) => void;
+  newVehicle: (vin: Vin) => void;
+  setKey: (vin: Vin, key: string) => void;
+  setCert: (vin: Vin, cert: string) => void;
+  changeVin: (oldVin: Vin, newVin: Vin) => void;
   configureServer: (host: string, port: string) => void;
   server: ServerData | null;
   isLoading: boolean;
@@ -22,12 +25,24 @@ interface DataStore {
   saveData: (fleetData: FleetData, serverData: ServerData) => Promise<void>;
 }
 
-export type vin = string;
+export type Vin = string;
+
+export type LocationValue = {
+  latitude: number;
+  longitude: number;
+};
+
+export type ShiftState = number;
+
+export type ChargeState = number;
 
 export type KeyData = {
   [key: string]: {
     stringValue?: string;
     intValue?: number;
+    shiftState?: ShiftState;
+    chargeState?: ChargeState;
+    locationValue?: LocationValue;
   };
 };
 
@@ -38,7 +53,7 @@ export type Vehicle = {
 };
 
 export type FleetData = {
-  [key: vin]: Vehicle;
+  [key: Vin]: Vehicle;
 };
 
 export type ServerData = {

@@ -19,6 +19,8 @@ type Value struct {
 	LongValue     *int64                `json:"longValue,omitempty"`
 	BooleanValue  *bool                 `json:"booleanValue,omitempty"`
 	LocationValue *protos.LocationValue `json:"locationValue,omitempty"`
+	ChargingState *protos.ChargingState `json:"chargingState,omitempty"`
+	ShiftState    *protos.ShiftState    `json:"shiftState,omitempty"`
 }
 
 // Data stores the custom fields included in a message.
@@ -107,6 +109,16 @@ func getDatumValue(v Value) *protos.Value {
 				Longitude: v.LocationValue.Longitude,
 			}},
 		}
+	case v.ShiftState != nil:
+		return &protos.Value{
+			Value: &protos.Value_ShiftStateValue{ShiftStateValue: *v.ShiftState},
+		}
+
+	case v.ChargingState != nil:
+		return &protos.Value{
+			Value: &protos.Value_ChargingValue{ChargingValue: *v.ChargingState},
+		}
+
 	}
 	return nil
 }

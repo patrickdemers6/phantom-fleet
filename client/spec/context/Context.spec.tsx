@@ -131,15 +131,33 @@ describe('Context', () => {
   it.each([
     [
       'setIntData',
-      { data: { Gear: { intValue: 1 } } },
-      { data: { Gear: { intValue: 2 } } },
-      (ctx: AppContext) => ctx.setIntData(testVin, 'Gear', 2),
+      { data: { Odometer: { intValue: 1 } } },
+      { data: { Odometer: { intValue: 2 } } },
+      (ctx: AppContext) => ctx.setIntData(testVin, 'Odometer', 2),
     ],
     [
       'setStringData',
       { data: { VehicleName: { stringValue: 'before' } } },
       { data: { VehicleName: { stringValue: 'after' } } },
       (ctx: AppContext) => ctx.setStringData(testVin, 'VehicleName', 'after'),
+    ],
+    [
+      'setLocationValue',
+      { data: { VehicleName: { stringValue: 'before' } } },
+      { data: { VehicleName: { stringValue: 'after' } } },
+      (ctx: AppContext) => ctx.setStringData(testVin, 'VehicleName', 'after'),
+    ],
+    [
+      'setChargeState',
+      { data: { ChargeState: { chargeState: 1 } } },
+      { data: { ChargeState: { chargeState: 2 } } },
+      (ctx: AppContext) => ctx.setChargeState(testVin, 'ChargeState', 2),
+    ],
+    [
+      'setShiftState',
+      { data: { Gear: { shiftState: 1 } } },
+      { data: { Gear: { shiftState: 2 } } },
+      (ctx: AppContext) => ctx.setShiftState(testVin, 'Gear', 2),
     ],
     [
       'setCert',
