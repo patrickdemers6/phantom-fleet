@@ -2,18 +2,13 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import {
-  AppContext, ChargeState, DataStore, FleetData, KeyData, LocationValue, ServerData, ShiftState,
+  AppContext, ChargeState, DataStore, FleetData, KeyData, LocationValue, ServerData, ShiftState, Vehicle,
 } from './types';
 
 type ContextProviderProps = {
   children: React.ReactNode;
   Context: React.Context<AppContext | undefined>;
   dataStore: DataStore;
-};
-
-const defaultData = {
-  Gear: { intValue: 2 },
-  VehicleName: { stringValue: 'First Vehicle' },
 };
 
 const ContextProvider = ({
@@ -83,10 +78,10 @@ const ContextProvider = ({
     setData(vin, { [field]: { chargeState: value } });
   };
 
-  const newVehicle = (vin: string) => {
+  const newVehicle = (vin: string, cert: string, key: string) => {
     setFleetData((d) => ({
       ...d,
-      [vin]: { data: defaultData, key: '', cert: '' },
+      [vin]: { data: {}, key, cert },
     }));
   };
 
