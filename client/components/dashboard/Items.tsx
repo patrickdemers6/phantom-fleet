@@ -13,38 +13,40 @@ type ItemProps = {
 
 const Item = (props: ItemProps) => {
   const app = useApp();
-  const { field, fieldType } = props.item;
+  const { fields, fieldType } = props.item;
 
-  const setFunctionName = `set${fieldType
-    .charAt(0)
-    .toUpperCase()}${fieldType.slice(1)}` as keyof typeof app;
-
-  const handleChange = (value: unknown) => {
+  const handleChange = (fieldName: string, value: unknown) => {
+    const setFunctionName = `set${fieldType
+      .charAt(0)
+      .toUpperCase()}${fieldType.slice(1)}` as keyof typeof app;
     const changeFn = app[setFunctionName];
     if (!changeFn) {
       return;
     }
     // @ts-ignore next-line
-    changeFn(props.vin, field, value);
+    changeFn(props.vin, fieldName, value);
   };
 
   // @ts-ignore next-line
-  const fieldValue = app.fleetData[props.vin]?.data?.[field]?.[fieldType];
+  const fieldValues = fields.map((field) => app.fleetData[props.vin]?.data?.[field]?.[fieldType]);
+
   useEffect(() => {
-    if (typeof fieldValue === 'undefined') {
-      handleChange(props.item.defaultValue);
-    }
+    fields.forEach((fieldName, i) => {
+      if (typeof fieldValues[i] === 'undefined') {
+        handleChange(fieldName, props.item.defaultValue);
+      }
+    });
   }, []);
 
-  if (typeof fieldValue === 'undefined') return null;
+  if (fieldValues.some((f) => typeof f === 'undefined')) return null;
 
   return (
     <GenericRenderer
       type={props.item.type}
       vin={props.vin}
       data={props.item.data}
-      value={fieldValue}
-      handleChange={handleChange}
+      values={fieldValues}
+      handleChangeFns={fields.map((field) => (value: unknown) => handleChange(field, value))}
       // passing RenderSubItems prevents an import cycle
       RenderSubItems={Items}
     />
@@ -60,7 +62,7 @@ type ItemsProps = {
 const Items = (props: ItemsProps) => (
   <Box sx={props.secondary ? { paddingTop: 2 } : {}}>
     {props.items.map((item) => (
-      <Item key={item.field} vin={props.vin} item={item} />
+      <Item key={item.fields[0]} vin={props.vin} item={item} />
     ))}
   </Box>
 );

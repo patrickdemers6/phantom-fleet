@@ -20,7 +20,7 @@ const charge = {
       data: {
         menuItems: chargeStates,
       },
-      field: 'chargeState',
+      fields: ['ChargeState'],
       fieldType: 'chargeState',
       defaultValue: 0,
     },

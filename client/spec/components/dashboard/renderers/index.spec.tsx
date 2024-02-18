@@ -6,8 +6,8 @@ describe('GenericRenderer', () => {
   it('renders', () => {
     render(<GenericRenderer
       vin={testVin}
-      handleChange={jest.fn()}
-      value={1}
+      handleChangeFns={[jest.fn()]}
+      values={[1]}
       data={{
         field: '',
         title: 'Dropdown',

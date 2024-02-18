@@ -14,7 +14,7 @@ const data = {
       shortName: '3',
       value: 3,
       items: [{
-        type: 'dropdown', data: {}, defaultValue: 1, field: '', fieldType: '',
+        type: 'dropdown', data: {}, defaultValue: 1, fields: [''], fieldType: '',
       }],
     },
   ],
@@ -30,9 +30,9 @@ describe('CircleSelect', () => {
   beforeEach(() => {
     handleChangeStub = jest.fn();
     const s = render(<CircleSelect
-      handleChange={handleChangeStub}
+      handleChangeFns={[handleChangeStub]}
       vin={testVin}
-      value={1}
+      values={[1]}
       data={data}
       RenderSubItems={() => <>subitems_present</>}
     />);
@@ -63,9 +63,9 @@ describe('CircleSelect', () => {
     describe('secondary option selected', () => {
       beforeEach(() => {
         rerender(<CircleSelect
-          handleChange={handleChangeStub}
+          handleChangeFns={[handleChangeStub]}
           vin={testVin}
-          value={4}
+          values={[4]}
           data={data}
           RenderSubItems={() => <>subitems_present</>}
         />);
@@ -85,9 +85,9 @@ describe('CircleSelect', () => {
   describe('secondary not present', () => {
     beforeEach(() => {
       rerender(<CircleSelect
-        handleChange={handleChangeStub}
+        handleChangeFns={[handleChangeStub]}
         vin={testVin}
-        value={1}
+        values={[1]}
         data={{ primary: data.primary }}
         RenderSubItems={() => <>subitems_present</>}
       />);
@@ -101,9 +101,9 @@ describe('CircleSelect', () => {
   it('renders subitems', () => {
     expect(screen.queryByText('subitems_present')).toBeNull();
     rerender(<CircleSelect
-      handleChange={handleChangeStub}
+      handleChangeFns={[handleChangeStub]}
       vin={testVin}
-      value={3}
+      values={[3]}
       data={data}
       RenderSubItems={() => <>subitems_present</>}
     />);
