@@ -1,7 +1,7 @@
 type RendererProps<T> = {
   vin: Vin,
-  handleChange: (data: unknown) => void;
-  value: unknown;
+  handleChangeFns: ((data: unknown) => void)[];
+  values: unknown[];
   data: T;
   RenderSubItems: RenderSubItems;
 };
