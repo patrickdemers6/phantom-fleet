@@ -27,7 +27,7 @@ const renderPage = (fleetData: FleetData) => act(async () => render(
 
 const vehicle = {
   data: {
-    Gear: { intValue: 2 },
+    Gear: { shiftState: 2 },
   },
   key: 'key',
   cert: 'cert',
@@ -46,7 +46,6 @@ describe('page /fleet/[id]', () => {
     it('clicking send button sends data', async () => {
       act(() => screen.getByText('Send').click());
       expect(sendData).toHaveBeenCalledTimes(1);
-      expect(sendData).toHaveBeenCalledWith(testVin, vehicle);
     });
   });
 

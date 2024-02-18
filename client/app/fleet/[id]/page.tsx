@@ -3,7 +3,6 @@
 import sendData from '@/api/data';
 import { useApp } from '@/context/ApplicationProvider';
 import { useSnackbar } from '@/components/SnackbarContext';
-import GearShift from '@/components/tiles/GearShift';
 import {
   AppBar,
   Box,
@@ -13,6 +12,7 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
+import Dashboard from '@/components/dashboard/Dashboard';
 
 type FleetIdPageProps = {
   params: {
@@ -64,8 +64,7 @@ function FleetIdPage({ params: { id: vin } }: FleetIdPageProps) {
       ) : (
         <Box sx={{ p: 3 }}>
           <Grid container spacing={2}>
-            {/* TODO: abstract out rendering of tiles */}
-            <GearShift vin={vin} />
+            <Dashboard vin={vin} />
           </Grid>
         </Box>
       )}

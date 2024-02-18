@@ -111,17 +111,15 @@ describe('Context', () => {
   it('newVehicle', async () => {
     await testWithContext(
       (ctx) => {
-        ctx.newVehicle('newVin');
+        ctx.newVehicle('newVin', 'cert', 'key');
       },
       (ctx) => {
         expect(ctx.fleetData).toEqual({
           newVin: {
             data: {
-              Gear: { intValue: 2 },
-              VehicleName: { stringValue: 'First Vehicle' },
             },
-            key: '',
-            cert: '',
+            key: 'key',
+            cert: 'cert',
           },
         });
       },

@@ -5,7 +5,7 @@ interface AppContext {
   setLocationValue: (vin: string, field: string, value: LocationValue) => void;
   setChargeState: (vin: string, field: string, value: ChargeState) => void;
   setShiftState: (vin: string, field: string, value: ShiftState) => void;
-  newVehicle: (vin: Vin) => void;
+  newVehicle: (vin: Vin, cert: string, key: string) => void;
   setKey: (vin: Vin, key: string) => void;
   setCert: (vin: Vin, cert: string) => void;
   changeVin: (oldVin: Vin, newVin: Vin) => void;

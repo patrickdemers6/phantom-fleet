@@ -45,6 +45,12 @@ export function VehicleModalProvider({ children }: VehicleModalProviderProps) {
     setModalData(null);
   };
   const onSubmit = (data: VehicleFormData) => {
+    if (initialData === null) {
+      fleet.newVehicle(data.vin, data.cert, data.key);
+      closeVehicle();
+      return;
+    }
+
     if (initialData?.vin !== data.vin) fleet.changeVin(initialData?.vin as string, data.vin);
     if (initialData?.key !== data.key) fleet.setKey(data.vin, data.key);
     if (initialData?.cert !== data.cert) fleet.setCert(data.vin, data.cert);
