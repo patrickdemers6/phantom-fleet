@@ -131,19 +131,25 @@ describe('Context', () => {
       'setIntData',
       { data: { Odometer: { intValue: 1 } } },
       { data: { Odometer: { intValue: 2 } } },
-      (ctx: AppContext) => ctx.setIntData(testVin, 'Odometer', 2),
+      (ctx: AppContext) => ctx.setIntValue(testVin, 'Odometer', 2),
+    ],
+    [
+      'setIntData with string',
+      { data: { Odometer: { intValue: 1 } } },
+      { data: { Odometer: { intValue: 2 } } },
+      (ctx: AppContext) => ctx.setIntValue(testVin, 'Odometer', '2'),
     ],
     [
       'setStringData',
       { data: { VehicleName: { stringValue: 'before' } } },
       { data: { VehicleName: { stringValue: 'after' } } },
-      (ctx: AppContext) => ctx.setStringData(testVin, 'VehicleName', 'after'),
+      (ctx: AppContext) => ctx.setStringValue(testVin, 'VehicleName', 'after'),
     ],
     [
       'setLocationValue',
       { data: { VehicleName: { stringValue: 'before' } } },
       { data: { VehicleName: { stringValue: 'after' } } },
-      (ctx: AppContext) => ctx.setStringData(testVin, 'VehicleName', 'after'),
+      (ctx: AppContext) => ctx.setStringValue(testVin, 'VehicleName', 'after'),
     ],
     [
       'setChargeState',
@@ -193,4 +199,24 @@ describe('Context', () => {
       );
     },
   );
+
+  it('does not set int if string contains invalid characters', () => {
+    const action = (app: AppContext) => {
+      app.setIntValue(testVin, 'Odometer', '1a');
+    };
+    const makeAssertions = (app: AppContext) => {
+      expect(app.fleetData).toEqual({
+        [testVin]: { data: { Odometer: { intValue: 1 } }, key: '', cert: '' },
+      });
+    };
+    testWithContext(
+      action,
+      makeAssertions,
+      {
+        fleetData: {
+          [testVin]: { data: { Odometer: { intValue: 1 } }, key: '', cert: '' },
+        },
+      },
+    );
+  });
 });

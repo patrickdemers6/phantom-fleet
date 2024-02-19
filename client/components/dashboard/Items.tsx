@@ -28,7 +28,7 @@ const Item = (props: ItemProps) => {
   };
 
   // @ts-ignore next-line
-  const fieldValues = fields.map((field) => app.fleetData[props.vin]?.data?.[field]?.[fieldType]);
+  const fieldValues = fields.map((field) => (field === null ? null : app.fleetData[props.vin]?.data?.[field]?.[fieldType]));
 
   useEffect(() => {
     fields.forEach((fieldName, i) => {
