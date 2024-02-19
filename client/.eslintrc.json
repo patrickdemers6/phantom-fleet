@@ -8,7 +8,8 @@
     "react-hooks/exhaustive-deps": "off",
     "react/function-component-definition": "off",
     "react/destructuring-assignment": "off",
-    "@typescript-eslint/no-use-before-define": "off"
+    "@typescript-eslint/no-use-before-define": "off",
+    "max-len": ["error", { "code": 140 }]
   },
   "parserOptions": {
     "project": ["./tsconfig.json"]

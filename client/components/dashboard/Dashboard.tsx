@@ -3,8 +3,7 @@ import {
   Card, CardContent, Grid, Typography,
 } from '@mui/material';
 import Items from './Items';
-import charge from './blocks/charge';
-import gearShift from './blocks/gearShift';
+import blocks from './blocks';
 
 type DashboardProps = {
   vin: Vin;
@@ -12,8 +11,9 @@ type DashboardProps = {
 
 // TODO: make blocks shown configurable
 const allBlocks = [
-  gearShift,
-  charge,
+  blocks.gearShift,
+  blocks.charge,
+  blocks.tirePressure,
 ];
 
 const Dashboard = (props: DashboardProps) => allBlocks.map((block) => (

@@ -58,11 +58,15 @@ const ContextProvider = ({
     }));
   };
 
-  const setStringData = (vin: string, field: string, value: string) => {
+  const setStringValue = (vin: string, field: string, value: string) => {
     setData(vin, { [field]: { stringValue: value } });
   };
 
-  const setIntData = (vin: string, field: string, value: number) => {
+  const setIntValue = (vin: string, field: string, value: number | string) => {
+    if (typeof value === 'string') {
+      if (!value.match(/^[0-9]*$/)) return;
+      value = parseInt(value);
+    }
     setData(vin, { [field]: { intValue: value } });
   };
 
@@ -115,8 +119,8 @@ const ContextProvider = ({
     <Context.Provider
       value={useMemo(() => ({
         fleetData,
-        setStringData,
-        setIntData,
+        setStringValue,
+        setIntValue,
         setLocationValue,
         setShiftState,
         setChargeState,

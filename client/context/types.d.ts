@@ -1,7 +1,7 @@
 interface AppContext {
   fleetData: FleetData;
-  setStringData: (vin: Vin, field: string, value: string) => void;
-  setIntData: (vin: Vin, field: string, value: number) => void;
+  setStringValue: (vin: Vin, field: string, value: string) => void;
+  setIntValue: (vin: Vin, field: string, value: number | string) => void;
   setLocationValue: (vin: string, field: string, value: LocationValue) => void;
   setChargeState: (vin: string, field: string, value: ChargeState) => void;
   setShiftState: (vin: string, field: string, value: ShiftState) => void;

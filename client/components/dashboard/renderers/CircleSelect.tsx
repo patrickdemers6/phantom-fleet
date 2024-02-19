@@ -48,7 +48,9 @@ const CircleSelect = (props: RendererProps<CircleSelectData>) => {
               <div ref={item.name === OPEN_MENU.name ? menuAnchor : null}>
                 <SingleCharacterButton
                   onClick={() => onClick(item)}
-                  variant={(item.value === props.values[0] || (item.name === OPEN_MENU.name && selectedItemIsInSecondary)) ? 'contained' : 'text'}
+                  variant={(item.value === props.values[0]
+                    || (item.name === OPEN_MENU.name && selectedItemIsInSecondary))
+                    ? 'contained' : 'text'}
                   character={item.shortName}
                 />
               </div>
