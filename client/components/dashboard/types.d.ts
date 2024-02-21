@@ -13,6 +13,7 @@ type TileItem = {
   fields: string[];
   fieldType: string;
   defaultValue: any;
+  title?: string;
 };
 
 type TileConfig = {
