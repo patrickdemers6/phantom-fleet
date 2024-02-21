@@ -11,7 +11,7 @@ const config = {
   moduleNameMapper: {
     sinon: '<rootDir>/node_modules/sinon/pkg/sinon.js',
   },
-  setupFilesAfterEnv: ['<rootDir>/spec/setup.ts'],
+  setupFilesAfterEnv: ['<rootDir>/spec/setup.tsx'],
 };
 
 module.exports = createJestConfig(config);

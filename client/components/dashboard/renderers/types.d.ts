@@ -3,5 +3,6 @@ type RendererProps<T> = {
   handleChangeFns: ((data: unknown) => void)[];
   values: unknown[];
   data: T;
+  title?: string;
   RenderSubItems: RenderSubItems;
 };

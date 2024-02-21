@@ -4,6 +4,20 @@ const chargeStates: FieldOption[] = [
     name: 'Charging',
     shortName: 'Charging',
     value: 4,
+    items: [
+      {
+        title: 'Amps',
+        type: 'slider',
+        data: {
+          min: 0,
+          max: 1000,
+          unit: 'A',
+        },
+        defaultValue: 28,
+        fields: ['ChargeAmps'],
+        fieldType: 'intValue',
+      },
+    ],
   },
   { name: 'Complete', shortName: 'Complete', value: 5 },
   { name: 'Starting', shortName: 'Starting', value: 3 },

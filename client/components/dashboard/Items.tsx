@@ -45,6 +45,7 @@ const Item = (props: ItemProps) => {
       type={props.item.type}
       vin={props.vin}
       data={props.item.data}
+      title={props.item.title}
       values={fieldValues}
       handleChangeFns={fields.map((field) => (value: unknown) => handleChange(field, value))}
       // passing RenderSubItems prevents an import cycle
