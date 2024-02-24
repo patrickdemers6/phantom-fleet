@@ -2,6 +2,7 @@ interface AppContext {
   fleetData: FleetData;
   setStringValue: (vin: Vin, field: string, value: string) => void;
   setIntValue: (vin: Vin, field: string, value: number | string) => void;
+  setFloatValue: (vin: Vin, field: string, value: number | string) => void;
   setLocationValue: (vin: string, field: string, value: LocationValue) => void;
   setChargeState: (vin: string, field: string, value: ChargeState) => void;
   setShiftState: (vin: string, field: string, value: ShiftState) => void;
@@ -40,6 +41,8 @@ export type KeyData = {
   [key: string]: {
     stringValue?: string;
     intValue?: number;
+    floatValueInternal?: string;
+    floatValue?: number;
     shiftState?: ShiftState;
     chargeState?: ChargeState;
     locationValue?: LocationValue;

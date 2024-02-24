@@ -70,6 +70,13 @@ const ContextProvider = ({
     setData(vin, { [field]: { intValue: value } });
   };
 
+  const setFloatValue = (vin: string, field: string, value: number | string) => {
+    if (typeof value === 'number') {
+      value = value.toString();
+    }
+    setData(vin, { [field]: { floatValueInternal: value } });
+  };
+
   const setLocationValue = (vin: string, field: string, value: LocationValue) => {
     setData(vin, { [field]: { locationValue: value } });
   };
@@ -121,6 +128,7 @@ const ContextProvider = ({
         fleetData,
         setStringValue,
         setIntValue,
+        setFloatValue,
         setLocationValue,
         setShiftState,
         setChargeState,

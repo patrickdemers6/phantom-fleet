@@ -4,7 +4,7 @@ const tirePressure = {
     {
       type: 'vehicle-text-input',
       fields: ['TpmsPressureLF', 'TpmsPressureRF', 'TpmsPressureLR', 'TpmsPressureRR'],
-      fieldType: 'intValue',
+      fieldType: 'floatValue',
       defaultValue: 42,
       data: {
         unit: 'psi',

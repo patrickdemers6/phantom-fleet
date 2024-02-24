@@ -128,19 +128,37 @@ describe('Context', () => {
 
   it.each([
     [
-      'setIntData',
+      'setIntValue',
       { data: { Odometer: { intValue: 1 } } },
       { data: { Odometer: { intValue: 2 } } },
       (ctx: AppContext) => ctx.setIntValue(testVin, 'Odometer', 2),
     ],
     [
-      'setIntData with string',
+      'setFloatValue with int',
+      { data: { Odometer: { floatValueInternal: '1' } } },
+      { data: { Odometer: { floatValueInternal: '2' } } },
+      (ctx: AppContext) => ctx.setFloatValue(testVin, 'Odometer', 2),
+    ],
+    [
+      'setFloatValue with float',
+      { data: { Odometer: { floatValueInternal: '1.1' } } },
+      { data: { Odometer: { floatValueInternal: '2.2' } } },
+      (ctx: AppContext) => ctx.setFloatValue(testVin, 'Odometer', 2.2),
+    ],
+    [
+      'setFloatValue with valid string',
+      { data: { Odometer: { floatValueInternal: '1.1' } } },
+      { data: { Odometer: { floatValueInternal: '2.2' } } },
+      (ctx: AppContext) => ctx.setFloatValue(testVin, 'Odometer', '2.2'),
+    ],
+    [
+      'setIntValue with string',
       { data: { Odometer: { intValue: 1 } } },
       { data: { Odometer: { intValue: 2 } } },
       (ctx: AppContext) => ctx.setIntValue(testVin, 'Odometer', '2'),
     ],
     [
-      'setStringData',
+      'setStringValue',
       { data: { VehicleName: { stringValue: 'before' } } },
       { data: { VehicleName: { stringValue: 'after' } } },
       (ctx: AppContext) => ctx.setStringValue(testVin, 'VehicleName', 'after'),
