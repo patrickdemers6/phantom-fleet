@@ -6,6 +6,13 @@ let msgCount = 0;
 
 const createData = (data: KeyData) => {
   return Object.entries(data).reduce((arr, [key, value]) => {
+    if (value.floatValueInternal) {
+        value.floatValue = 0;
+      if (value.floatValueInternal.match(/^-?[0-9]+(\.[0-9]+)?$/)) {
+        value.floatValue = parseFloat(value.floatValueInternal);
+      }
+      delete value.floatValueInternal;
+    }
     arr.push({ key, value });
     return arr;
   }, [] as Data[]);

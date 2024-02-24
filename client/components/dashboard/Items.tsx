@@ -27,8 +27,10 @@ const Item = (props: ItemProps) => {
     changeFn(props.vin, fieldName, value);
   };
 
+  let internalFieldType = fieldType;
+  if (fieldType === 'floatValue') internalFieldType = 'floatValueInternal';
   // @ts-ignore next-line
-  const fieldValues = fields.map((field) => (field === null ? null : app.fleetData[props.vin]?.data?.[field]?.[fieldType]));
+  const fieldValues = fields.map((field) => (field === null ? null : app.fleetData[props.vin]?.data?.[field]?.[internalFieldType]));
 
   useEffect(() => {
     fields.forEach((fieldName, i) => {
