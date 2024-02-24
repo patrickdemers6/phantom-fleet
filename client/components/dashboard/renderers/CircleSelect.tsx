@@ -77,7 +77,7 @@ const CircleSelect = (props: RendererProps<CircleSelectData>) => {
           ))}
         </Menu>
         )}
-      {selectedItem?.items
+      {selectedItem?.items && RenderSubItems
         ? <RenderSubItems secondary vin={props.vin} items={selectedItem.items} />
         : null}
     </>

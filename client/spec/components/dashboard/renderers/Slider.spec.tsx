@@ -18,7 +18,6 @@ describe('Slider', () => {
         jest.fn(),
       ],
       vin: testVin,
-      RenderSubItems: () => <div />,
     };
   });
   it('renders title', () => {

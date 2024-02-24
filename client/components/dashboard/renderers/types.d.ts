@@ -4,5 +4,5 @@ type RendererProps<T> = {
   values: unknown[];
   data: T;
   title?: string;
-  RenderSubItems: RenderSubItems;
+  RenderSubItems?: RenderSubItems;
 };

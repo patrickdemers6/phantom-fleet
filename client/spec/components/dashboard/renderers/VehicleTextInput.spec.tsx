@@ -18,7 +18,6 @@ describe('VehicleTextInput', () => {
       data={{
         unit: 'psi',
       }}
-      RenderSubItems={() => <div />}
     />);
     rerender = s.rerender;
   });
@@ -38,7 +37,6 @@ describe('VehicleTextInput', () => {
         unit: 'psi',
         formType: 'number',
       }}
-      RenderSubItems={() => <div />}
     />);
     values.forEach((value) => {
       const el = screen.getByDisplayValue(value);

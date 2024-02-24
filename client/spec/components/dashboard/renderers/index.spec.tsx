@@ -18,7 +18,6 @@ describe('GenericRenderer', () => {
         ],
       }}
       type="dropdown"
-      RenderSubItems={jest.fn()}
     />);
     expect(screen.getByText('Dropdown')).toBeInTheDocument();
   });
