@@ -33,7 +33,7 @@ const Dropdown = (props: RendererProps<DropdownData>) => {
           </MenuItem>
         ))}
       </Select>
-      {selectedItem?.items
+      {selectedItem?.items && RenderSubItems
         ? <RenderSubItems secondary vin={props.vin} items={selectedItem.items} />
         : null}
     </>
