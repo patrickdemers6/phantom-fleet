@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import MUISlider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 import { InputAdornment } from '@mui/material';
+import isNumber from '@/helpers/isNumber';
 
 export type SliderData = {
   min: number;
@@ -45,7 +46,8 @@ const Slider = (props: RendererProps<SliderData>) => {
           <MUISlider
             max={max}
             min={min}
-            value={typeof value === 'number' ? value : 0}
+            step={step}
+            value={typeof value === 'string' && isNumber(value) ? parseFloat(value) : value}
             onChange={handleSliderChange}
             aria-labelledby="input-slider"
             data-testid="Slider-slider"

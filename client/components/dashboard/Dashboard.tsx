@@ -11,6 +11,7 @@ type DashboardProps = {
 
 // TODO: make blocks shown configurable
 const allBlocks = [
+  blocks.location,
   blocks.gearShift,
   blocks.charge,
   blocks.tirePressure,

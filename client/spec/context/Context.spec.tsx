@@ -164,12 +164,6 @@ describe('Context', () => {
       (ctx: AppContext) => ctx.setStringValue(testVin, 'VehicleName', 'after'),
     ],
     [
-      'setLocationValue',
-      { data: { VehicleName: { stringValue: 'before' } } },
-      { data: { VehicleName: { stringValue: 'after' } } },
-      (ctx: AppContext) => ctx.setStringValue(testVin, 'VehicleName', 'after'),
-    ],
-    [
       'setChargeState',
       { data: { ChargeState: { chargeState: 1 } } },
       { data: { ChargeState: { chargeState: 2 } } },

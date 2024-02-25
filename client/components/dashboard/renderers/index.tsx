@@ -1,6 +1,7 @@
 import CircleSelect from './CircleSelect';
 import Dropdown from './Dropdown';
 import Slider from './Slider';
+import TextInput from './TextInput';
 import VehicleTextInput from './VehicleTextInput';
 
 export const itemRenderers = {
@@ -8,6 +9,7 @@ export const itemRenderers = {
   circleselect: CircleSelect,
   'vehicle-text-input': VehicleTextInput,
   slider: Slider,
+  'text-input': TextInput,
 };
 
 const GenericRenderer = (props: RendererProps<any> & { type: string }) => {

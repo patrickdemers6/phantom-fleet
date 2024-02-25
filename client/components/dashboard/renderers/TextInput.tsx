@@ -14,6 +14,8 @@ const TextInput = (props: RendererProps<TextInputData>) => {
     <TextField
       onChange={(e) => props.handleChangeFns[0](e?.target.value)}
       value={value}
+      label={props.title}
+      fullWidth
       InputProps={unit
         ? { endAdornment: <InputAdornment position="end">{unit}</InputAdornment>, ...props.data.InputProps }
         : props.data.InputProps}

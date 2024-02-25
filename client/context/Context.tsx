@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import {
-  AppContext, ChargeState, DataStore, FleetData, KeyData, LocationValue, ServerData, ShiftState, Vehicle,
+  AppContext, ChargeState, DataStore, FleetData, KeyData, ServerData, ShiftState
 } from './types';
 
 type ContextProviderProps = {
@@ -77,10 +77,6 @@ const ContextProvider = ({
     setData(vin, { [field]: { floatValueInternal: value } });
   };
 
-  const setLocationValue = (vin: string, field: string, value: LocationValue) => {
-    setData(vin, { [field]: { locationValue: value } });
-  };
-
   const setShiftState = (vin: string, field: string, value: ShiftState) => {
     setData(vin, { [field]: { shiftState: value } });
   };
@@ -129,7 +125,6 @@ const ContextProvider = ({
         setStringValue,
         setIntValue,
         setFloatValue,
-        setLocationValue,
         setShiftState,
         setChargeState,
         setKey,
