@@ -15,6 +15,7 @@ const allBlocks = [
   blocks.gearShift,
   blocks.charge,
   blocks.tirePressure,
+  blocks.window,
 ];
 
 const Dashboard = (props: DashboardProps) => allBlocks.map((block) => (

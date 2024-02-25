@@ -1,18 +1,22 @@
 import CircleSelect from './CircleSelect';
 import Dropdown from './Dropdown';
+import Mock from './Mock';
 import Slider from './Slider';
 import TextInput from './TextInput';
-import VehicleTextInput from './VehicleTextInput';
+import Vehicle from './Vehicle';
 
 export const itemRenderers = {
   dropdown: Dropdown,
   circleselect: CircleSelect,
-  'vehicle-text-input': VehicleTextInput,
+  vehicle: Vehicle,
   slider: Slider,
+  mock: Mock,
   'text-input': TextInput,
 };
 
-const GenericRenderer = (props: RendererProps<any> & { type: string }) => {
+export type GenericRendererProps = RendererProps<any> & { type: string };
+
+const GenericRenderer = (props: GenericRendererProps) => {
   const Render = itemRenderers[props.type as keyof typeof itemRenderers];
   return <Render {...props} />;
 };
