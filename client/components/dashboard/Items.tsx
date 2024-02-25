@@ -50,8 +50,9 @@ const Item = (props: ItemProps) => {
       title={props.item.title}
       values={fieldValues}
       handleChangeFns={fields.map((field) => (value: unknown) => handleChange(field, value))}
-      // passing RenderSubItems prevents an import cycle
+      // prevent import cycle
       RenderSubItems={Items}
+      GenericRenderer={GenericRenderer}
     />
   );
 };

@@ -5,4 +5,5 @@ type RendererProps<T> = {
   data: T;
   title?: string;
   RenderSubItems?: RenderSubItems;
+  GenericRenderer?: (props: GenericRendererProps) => JSX.Element;
 };

@@ -1,10 +1,10 @@
-import Vehicle from '@/components/dashboard/renderers/components/Vehicle';
+import TopdownVehicle from '@/components/dashboard/renderers/components/TopdownVehicle';
 import { render, screen } from '@testing-library/react';
 
-describe('Vehicle', () => {
+describe('TopdownVehicle', () => {
   let rerender: (ui: React.ReactElement<any, string | React.JSXElementConstructor<any>>) => void;
   beforeEach(() => {
-    const s = render(<Vehicle
+    const s = render(<TopdownVehicle
       driverFront={<div>driverFront</div>}
       driverRear={<div>driverRear</div>}
       passengerFront={<div>passengerFront</div>}
@@ -42,7 +42,7 @@ describe('Vehicle', () => {
       passengerRear: <div>passengerRear</div>,
     };
     delete props[field as keyof typeof props];
-    rerender(<Vehicle {...props} />);
+    rerender(<TopdownVehicle {...props} />);
     expect(screen.queryByText(field)).toBeNull();
   });
 });
