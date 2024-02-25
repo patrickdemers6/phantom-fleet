@@ -64,8 +64,10 @@ type ItemsProps = {
 
 const Items = (props: ItemsProps) => (
   <Box sx={props.secondary ? { paddingTop: 2 } : {}}>
-    {props.items.map((item) => (
-      <Item key={item.fields[0]} vin={props.vin} item={item} />
+    {props.items.map((item, i, arr) => (
+      <div style={{ paddingBottom: i === arr.length - 1 ? 0 : 16 }}>
+        <Item key={item.fields[0]} vin={props.vin} item={item} />
+      </div>
     ))}
   </Box>
 );

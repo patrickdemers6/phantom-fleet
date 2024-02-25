@@ -3,7 +3,6 @@ interface AppContext {
   setStringValue: (vin: Vin, field: string, value: string) => void;
   setIntValue: (vin: Vin, field: string, value: number | string) => void;
   setFloatValue: (vin: Vin, field: string, value: number | string) => void;
-  setLocationValue: (vin: string, field: string, value: LocationValue) => void;
   setChargeState: (vin: string, field: string, value: ChargeState) => void;
   setShiftState: (vin: string, field: string, value: ShiftState) => void;
   newVehicle: (vin: Vin, cert: string, key: string) => void;
@@ -29,8 +28,13 @@ interface DataStore {
 export type Vin = string;
 
 export type LocationValue = {
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
+};
+
+export type LocationValueInternal = {
+  latitude?: string;
+  longitude?: string;
 };
 
 export type ShiftState = number;
