@@ -16,6 +16,10 @@ const allBlocks = [
   blocks.charge,
   blocks.tirePressure,
   blocks.window,
+  blocks.navigation,
+  blocks.lifetimeStats,
+  blocks.climate,
+  blocks.security,
 ];
 
 const Dashboard = (props: DashboardProps) => allBlocks.map((block) => (

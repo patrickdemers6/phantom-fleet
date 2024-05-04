@@ -16,7 +16,7 @@ describe('Dropdown', () => {
         value: 1,
         items: [
           {
-            type: 'dropdown', data: {}, defaultValue: 1, fields: [''], fieldType: '',
+            type: 'dropdown', data: {}, defaultValue: 1, field: '', fieldType: '',
           },
         ],
       },
@@ -27,11 +27,12 @@ describe('Dropdown', () => {
   beforeEach(() => {
     handleChangeStub = jest.fn();
     const s = render(<Dropdown
-      handleChangeFns={[handleChangeStub]}
+      onChange={handleChangeStub}
       vin={testVin}
-      values={[1]}
+      value={1}
       data={data}
       RenderSubItems={() => <>subitems_present</>}
+      Item={() => null}
     />);
     rerender = s.rerender;
   });
@@ -46,11 +47,12 @@ describe('Dropdown', () => {
 
   it('renders no subitems when not present', () => {
     rerender(<Dropdown
-      handleChangeFns={[handleChangeStub]}
+      onChange={handleChangeStub}
       vin={testVin}
-      values={[2]}
+      value={2}
       data={data}
       RenderSubItems={() => <>subitems_present</>}
+      Item={() => null}
     />);
     expect(screen.queryByText('subitems_present')).toBeNull();
   });
@@ -70,11 +72,12 @@ describe('Dropdown', () => {
     expect(screen.queryByText('two')).toBeNull();
 
     rerender(<Dropdown
-      handleChangeFns={[handleChangeStub]}
+      onChange={handleChangeStub}
       vin={testVin}
-      values={[2]}
+      value={2}
       data={data}
       RenderSubItems={() => <>subitems_present</>}
+      Item={() => null}
     />);
 
     expect(screen.queryByText('one')).toBeNull();

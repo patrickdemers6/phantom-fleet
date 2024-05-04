@@ -14,7 +14,7 @@ const data = {
       shortName: '3',
       value: 3,
       items: [{
-        type: 'dropdown', data: {}, defaultValue: 1, fields: [''], fieldType: '',
+        type: 'dropdown', data: {}, defaultValue: 1, field: '', fieldType: '',
       }],
     },
   ],
@@ -30,11 +30,12 @@ describe('CircleSelect', () => {
   beforeEach(() => {
     handleChangeStub = jest.fn();
     const s = render(<CircleSelect
-      handleChangeFns={[handleChangeStub]}
+      onChange={handleChangeStub}
       vin={testVin}
-      values={[1]}
+      value={1}
       data={data}
       RenderSubItems={() => <>subitems_present</>}
+      Item={() => null}
     />);
     rerender = s.rerender;
   });
@@ -63,11 +64,12 @@ describe('CircleSelect', () => {
     describe('secondary option selected', () => {
       beforeEach(() => {
         rerender(<CircleSelect
-          handleChangeFns={[handleChangeStub]}
+          onChange={handleChangeStub}
           vin={testVin}
-          values={[4]}
+          value={4}
           data={data}
           RenderSubItems={() => <>subitems_present</>}
+          Item={() => null}
         />);
       });
       it('highlights menu button', () => {
@@ -85,11 +87,12 @@ describe('CircleSelect', () => {
   describe('secondary not present', () => {
     beforeEach(() => {
       rerender(<CircleSelect
-        handleChangeFns={[handleChangeStub]}
+        onChange={handleChangeStub}
         vin={testVin}
-        values={[1]}
+        value={1}
         data={{ primary: data.primary }}
         RenderSubItems={() => <>subitems_present</>}
+        Item={() => null}
       />);
     });
 
@@ -101,11 +104,12 @@ describe('CircleSelect', () => {
   it('renders subitems', () => {
     expect(screen.queryByText('subitems_present')).toBeNull();
     rerender(<CircleSelect
-      handleChangeFns={[handleChangeStub]}
+      onChange={handleChangeStub}
       vin={testVin}
-      values={[3]}
+      value={3}
       data={data}
       RenderSubItems={() => <>subitems_present</>}
+      Item={() => null}
     />);
     expect(screen.getByText('subitems_present')).toBeInTheDocument();
   });

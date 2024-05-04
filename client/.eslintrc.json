@@ -9,7 +9,14 @@
     "react/function-component-definition": "off",
     "react/destructuring-assignment": "off",
     "@typescript-eslint/no-use-before-define": "off",
-    "max-len": ["error", { "code": 140 }]
+    "max-len": ["error", { "code": 140 }],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["accumulator"]
+      }
+    ]
   },
   "parserOptions": {
     "project": ["./tsconfig.json"]

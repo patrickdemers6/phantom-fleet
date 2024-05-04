@@ -14,8 +14,8 @@ describe('TextInput', () => {
       data: {
         unit,
       },
-      handleChangeFns: [changeFn],
-      values: [defaultVaue],
+      onChange: changeFn,
+      value: defaultVaue,
     };
   });
 

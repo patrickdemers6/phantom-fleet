@@ -4,7 +4,7 @@ const location = {
     {
       title: 'Latitude',
       type: 'text-input',
-      fields: ['LocationLatitude'],
+      field: 'LocationLatitude',
       fieldType: 'floatValue',
       defaultValue: 37.7937,
       data: {
@@ -15,7 +15,7 @@ const location = {
     {
       title: 'Longitude',
       type: 'text-input',
-      fields: ['LocationLongitude'],
+      field: 'LocationLongitude',
       fieldType: 'floatValue',
       defaultValue: 122.3965,
       data: {
@@ -33,7 +33,7 @@ const location = {
         step: 5,
       },
       defaultValue: 28,
-      fields: ['VehicleSpeed'],
+      field: 'VehicleSpeed',
       fieldType: 'floatValue',
     },
   ],

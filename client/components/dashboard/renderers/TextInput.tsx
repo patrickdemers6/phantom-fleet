@@ -7,19 +7,19 @@ export type TextInputData = TextFieldProps & {
 
 const TextInput = (props: RendererProps<TextInputData>) => {
   const { type, unit } = props.data;
-  const value = props.values[0];
+  const { value, onChange } = props;
   if (value === null || typeof value === 'undefined') return null;
 
   return (
     <TextField
-      onChange={(e) => props.handleChangeFns[0](e?.target.value)}
+      title={props.title}
       value={value}
+      onChange={onChange ? (e) => onChange(e?.target.value) : () => null}
       label={props.title}
       fullWidth
       InputProps={unit
         ? { endAdornment: <InputAdornment position="end">{unit}</InputAdornment>, ...props.data.InputProps }
         : props.data.InputProps}
-      {...props}
       type={type === 'number' ? 'text' : type}
     />
   );

@@ -19,7 +19,7 @@ const gearShift = {
       data: {
         primary, secondary,
       },
-      fields: ['Gear'],
+      field: 'Gear',
       fieldType: 'shiftState',
       defaultValue: 0,
     },

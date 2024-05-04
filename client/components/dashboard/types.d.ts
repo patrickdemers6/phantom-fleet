@@ -10,7 +10,7 @@ type ItemData = unknown;
 type TileItem = {
   type: string;
   data: ItemData;
-  fields: string[];
+  field?: string;
   fieldType: string;
   defaultValue: any;
   title?: string;
