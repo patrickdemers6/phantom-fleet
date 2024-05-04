@@ -10,9 +10,9 @@ type DropdownData = {
 
 const Dropdown = (props: RendererProps<DropdownData>) => {
   const { RenderSubItems } = props;
-  const selectedItem = props.data.menuItems.find((item) => item.value === props.values[0]);
+  const selectedItem = props.data.menuItems.find((item) => item.value === props.value);
   const handleChange = (e: SelectChangeEvent<unknown>) => {
-    props.handleChangeFns[0](e.target.value);
+    props.onChange?.(e.target.value);
   };
   return (
     <>
@@ -20,7 +20,7 @@ const Dropdown = (props: RendererProps<DropdownData>) => {
         {props.data.title}
       </InputLabel>
       <Select
-        value={props.values[0]}
+        value={props.value}
         onChange={handleChange}
         fullWidth
         inputProps={{

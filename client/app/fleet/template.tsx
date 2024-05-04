@@ -67,14 +67,17 @@ function VehicleListDrawer() {
           Your Fleet
           <span>
             <Tooltip title="Add Vehicle">
-              <IconButton
-                size="small"
-                aria-label="add vehicle"
-                onClick={() => vehicleModal.newVehicle()}
-                disabled={app.isLoading}
-              >
-                <AddIcon />
-              </IconButton>
+              {/* span is needed for tooltip since disabled buttons do not emit events */}
+              <span>
+                <IconButton
+                  size="small"
+                  aria-label="add vehicle"
+                  onClick={() => vehicleModal.newVehicle()}
+                  disabled={app.isLoading}
+                >
+                  <AddIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           </span>
         </ListSubheader>

@@ -13,10 +13,8 @@ describe('Slider', () => {
         step: 1,
         unit: 'PSI',
       },
-      values: [1],
-      handleChangeFns: [
-        jest.fn(),
-      ],
+      value: 1,
+      onChange: jest.fn(),
       vin: testVin,
     };
   });
@@ -34,14 +32,14 @@ describe('Slider', () => {
   it('updates value from slider', () => {
     render(<Slider {...props} />);
     fireEvent.change(screen.getByTestId('Slider-slider'), { target: { value: 5 } });
-    expect(props.handleChangeFns[0]).toHaveBeenCalledTimes(1);
-    expect(props.handleChangeFns[0]).toHaveBeenCalledWith('5');
+    expect(props.onChange).toHaveBeenCalledTimes(1);
+    expect(props.onChange).toHaveBeenCalledWith('5');
   });
 
   it('updates value from input', () => {
     render(<Slider {...props} />);
     fireEvent.change(screen.getByTestId('Slider-textfield'), { target: { value: 5 } });
-    expect(props.handleChangeFns[0]).toHaveBeenCalledTimes(1);
-    expect(props.handleChangeFns[0]).toHaveBeenCalledWith(5);
+    expect(props.onChange).toHaveBeenCalledTimes(1);
+    expect(props.onChange).toHaveBeenCalledWith(5);
   });
 });

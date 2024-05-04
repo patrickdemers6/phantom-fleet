@@ -32,7 +32,7 @@ const Vehicle = (props: VehicleProps) => (
         <SideWrapper>{props.driverFront ?? null}</SideWrapper>
         <SideWrapper>{props.driverRear ?? null}</SideWrapper>
       </Box>
-      <Image alt="Overhead view of outlined Model 3" src="/model_3.svg" width={102} height={200} />
+      <Image alt="Overhead view of outlined Model 3" src="/model_3.svg" priority width={102} height={200} />
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
         <SideWrapper>{props.passengerFront ?? null}</SideWrapper>
         <SideWrapper>{props.passengerRear ?? null}</SideWrapper>

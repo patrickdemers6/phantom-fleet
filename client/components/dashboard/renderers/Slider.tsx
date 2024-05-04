@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import MUISlider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
@@ -18,21 +17,24 @@ const Slider = (props: RendererProps<SliderData>) => {
   const {
     min, max, step, unit,
   } = props.data;
-  const value = props.values[0] as number;
+  const value = props.value as number;
 
   const handleSliderChange = (_: Event, newValue: number | number[]) => {
-    props.handleChangeFns[0](newValue);
+    if (!props.onChange) return;
+    props.onChange(newValue);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.handleChangeFns[0](event.target.value === '' ? 0 : Number(event.target.value));
+    if (!props.onChange) return;
+    props.onChange(event.target.value === '' ? 0 : Number(event.target.value));
   };
 
   const handleBlur = () => {
+    if (!props.onChange) return;
     if (value < min) {
-      props.handleChangeFns[0](min);
+      props.onChange(min);
     } else if (value > max) {
-      props.handleChangeFns[0](max);
+      props.onChange(max);
     }
   };
 
@@ -41,8 +43,8 @@ const Slider = (props: RendererProps<SliderData>) => {
       <Typography id="input-slider" gutterBottom>
         {props.title}
       </Typography>
-      <Grid container spacing={2} alignItems="center">
-        <Grid item xs>
+      <Box sx={{ display: 'flex', gap: 3 }}>
+        <Box sx={{ flexGrow: 1, display: { xs: 'none', lg: 'block' } }}>
           <MUISlider
             max={max}
             min={min}
@@ -52,8 +54,8 @@ const Slider = (props: RendererProps<SliderData>) => {
             aria-labelledby="input-slider"
             data-testid="Slider-slider"
           />
-        </Grid>
-        <Grid item>
+        </Box>
+        <Box sx={{ maxWidth: 150 }}>
           <MuiInput
             value={value}
             size="small"
@@ -69,8 +71,8 @@ const Slider = (props: RendererProps<SliderData>) => {
             }}
             endAdornment={unit ? <InputAdornment position="end">{unit}</InputAdornment> : null}
           />
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   );
 };

@@ -14,7 +14,7 @@ const chargeStates: FieldOption[] = [
           unit: 'A',
         },
         defaultValue: 28,
-        fields: ['ChargeAmps'],
+        field: 'ChargeAmps',
         fieldType: 'intValue',
       },
     ],
@@ -34,7 +34,7 @@ const charge = {
       data: {
         menuItems: chargeStates,
       },
-      fields: ['ChargeState'],
+      field: 'ChargeState',
       fieldType: 'chargeState',
       defaultValue: 0,
     },

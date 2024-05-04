@@ -74,6 +74,7 @@ const ContextProvider = ({
     if (typeof value === 'number') {
       value = value.toString();
     }
+    if (!value.match(/^-?[0-9]*(\.[0-9]*)?$/)) return;
     setData(vin, { [field]: { floatValueInternal: value } });
   };
 

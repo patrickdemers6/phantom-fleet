@@ -1,20 +1,31 @@
+const windowDropdown = {
+  type: 'dropdown',
+  fieldType: 'stringValue',
+  defaultValue: 'Closed',
+  data: {
+    renderer: 'dropdown',
+    menuItems: [
+      { name: 'Closed', shortName: 'C', value: 'Closed' },
+      { name: 'Opened', shortName: 'O', value: 'Opened' },
+      { name: 'Partial', shortName: 'P', value: 'PartiallyOpen' },
+    ],
+  },
+};
+
 const window = {
   title: 'Windows',
   items: [
     {
       type: 'vehicle',
-      fields: ['FdWindow', 'FpWindow', 'RdWindow', 'RpWindow'],
       fieldType: 'stringValue',
       defaultValue: 'Closed',
       data: {
-        rendererData: {
-          menuItems: [
-            { name: 'Closed', shortName: 'C', value: 'Closed' },
-            { name: 'Opened', shortName: 'O', value: 'Opened' },
-            { name: 'Partial', shortName: 'P', value: 'PartiallyOpen' },
-          ],
+        positional: {
+          driverFront: { field: 'FdWindow', ...windowDropdown },
+          driverRear: { field: 'FpWindow', ...windowDropdown },
+          passengerFront: { field: 'RdWindow', ...windowDropdown },
+          passengerRear: { field: 'RpWindow', ...windowDropdown },
         },
-        renderer: 'dropdown',
       },
     },
   ],

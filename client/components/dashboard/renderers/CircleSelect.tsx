@@ -19,9 +19,9 @@ const CircleSelect = (props: RendererProps<CircleSelectData>) => {
   const menuAnchor = useRef(null);
 
   let selectedItemIsInSecondary = false;
-  let selectedItem = primary.find((item) => item.value === props.values[0]);
+  let selectedItem = primary.find((item) => item.value === props.value);
   if (!selectedItem && secondary) {
-    selectedItem = secondary.find((item) => item.value === props.values[0]);
+    selectedItem = secondary.find((item) => item.value === props.value);
     selectedItemIsInSecondary = true;
   }
 
@@ -34,7 +34,7 @@ const CircleSelect = (props: RendererProps<CircleSelectData>) => {
     }
 
     closeMenu();
-    props.handleChangeFns[0](item.value);
+    props.onChange?.(item.value);
   };
 
   const hasSecondary = secondary && secondary.length > 0;
@@ -48,7 +48,7 @@ const CircleSelect = (props: RendererProps<CircleSelectData>) => {
               <div ref={item.name === OPEN_MENU.name ? menuAnchor : null}>
                 <SingleCharacterButton
                   onClick={() => onClick(item)}
-                  variant={(item.value === props.values[0]
+                  variant={(item.value === props.value
                     || (item.name === OPEN_MENU.name && selectedItemIsInSecondary))
                     ? 'contained' : 'text'}
                   character={item.shortName}
@@ -70,7 +70,7 @@ const CircleSelect = (props: RendererProps<CircleSelectData>) => {
             <MenuItem
               key={item.name}
               onClick={() => onClick(item)}
-              selected={item.value === props.values[0]}
+              selected={item.value === props.value}
             >
               {item.name}
             </MenuItem>
