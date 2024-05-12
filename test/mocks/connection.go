@@ -13,7 +13,7 @@ type Connection struct {
 
 // Publish is a mock implementation of the telemetry.Connection.Publish method
 func (c *Connection) Publish(msg *message.Message) error {
-	args := c.Called()
+	args := c.Called(msg)
 	return args.Error(0)
 }
 

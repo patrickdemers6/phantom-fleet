@@ -54,12 +54,10 @@ const createData = (data: KeyData) => {
   }, [] as Data[]);
 };
 
-const sendData = async (vin: string, data: Vehicle) => {
+const sendData = async (vin: string, vehicle: Vehicle) => {
   const id = `msg-${msgCount++}`;
   const payload: VehicleData = {
-    cert: data.cert,
-    key: data.key,
-    data: createData(data.data),
+    data: createData(window.structuredClone(vehicle.data)),
     messageId: id,
     createdAt: Date.now(),
     txid: id,

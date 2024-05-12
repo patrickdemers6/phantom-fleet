@@ -1,5 +1,7 @@
+import { SnackbarProvider } from '@/components/SnackbarContext';
 import ApplicationProvider, { useApp } from '@/context/ApplicationProvider';
-import { InitialState } from '@/context/types';
+import { FleetData } from '@/context/types';
+import { Dispatch, SetStateAction } from 'react';
 
 function BlockWhileLoading({ children }: { children: React.ReactNode }) {
   const { isLoading } = useApp();
@@ -8,22 +10,21 @@ function BlockWhileLoading({ children }: { children: React.ReactNode }) {
 
 const wrapContext = (
   children: React.ReactNode,
-  saveData: (fleetData: any, serverData: any) => Promise<void> = () => Promise.resolve(),
-  state: Partial<InitialState> = {},
+  saveData: (fleetData: FleetData) => Promise<void> = () => Promise.resolve(),
+  state: FleetData = {},
 ) => {
-  const defaultState = {
-    fleetData: {},
-    serverData: { host: '', port: '' },
-    loading: false,
+  const loadData = async (cb: Dispatch<SetStateAction<FleetData>>) => {
+    cb(state);
   };
-  const loadData = async () => ({ ...defaultState, ...state });
 
   return (
     <ApplicationProvider
       contextProvider="mock"
-      dataStore={{ loadData, saveData }}
+      dataStore={{ loadData, saveData, deleteByVin: async () => {} }}
     >
-      <BlockWhileLoading>{children}</BlockWhileLoading>
+      <SnackbarProvider>
+        <BlockWhileLoading>{children}</BlockWhileLoading>
+      </SnackbarProvider>
     </ApplicationProvider>
   );
 };

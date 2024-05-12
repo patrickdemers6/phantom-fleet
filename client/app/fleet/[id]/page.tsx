@@ -7,12 +7,14 @@ import {
   AppBar,
   Box,
   Button,
+  Card,
   Grid,
   LinearProgress,
   Toolbar,
   Typography,
 } from '@mui/material';
 import Dashboard from '@/components/dashboard/Dashboard';
+import SendConfiguration from '@/components/setup/SendConfiguration';
 
 type FleetIdPageProps = {
   params: {
@@ -26,12 +28,6 @@ function FleetIdPage({ params: { id: vin } }: FleetIdPageProps) {
   const vehicle = fleetData[vin];
 
   const handleSend = () => {
-    if (vehicle.cert === '') {
-      snackbar.openSnackbar('Vehicle certificate is required.', 'error');
-    }
-    if (vehicle.key === '') {
-      snackbar.openSnackbar('Vehicle key is required.', 'error');
-    }
     sendData(vin, vehicle).catch(() => {
       snackbar.openSnackbar('Failed to send data.', 'error');
     });
@@ -40,9 +36,16 @@ function FleetIdPage({ params: { id: vin } }: FleetIdPageProps) {
   if (!vehicle && !isLoading) {
     return (
       <Box sx={{ p: 3 }}>
-        <Typography variant="h6" textAlign="center">
-          Vehicle not found.
+        <Typography variant="h6" textAlign="center" sx={{ mb: 2 }}>
+          Vehicle not found
         </Typography>
+        {Object.keys(fleetData).length === 0 && (
+        <Card variant="outlined" sx={{ padding: 3 }}>
+          <Typography variant="h5" align="center">Configure your first vehicle</Typography>
+          <SendConfiguration redirect />
+          <Button href="/setup">Guided Setup</Button>
+        </Card>
+        )}
       </Box>
     );
   }

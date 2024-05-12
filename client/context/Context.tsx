@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  AppContext, ChargeState, DataStore, FleetData, KeyData, ServerData, ShiftState
+  AppContext, DataStore, FleetData, KeyData, ShiftState, Vin
 } from './types';
 
 type ContextProviderProps = {
@@ -17,19 +17,22 @@ const ContextProvider = ({
   dataStore,
 }: ContextProviderProps) => {
   const [fleetData, setFleetData] = useState<FleetData>({});
-  const [serverData, setServerData] = useState<ServerData>({
-    host: '',
-    port: '',
-  });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isInitialLoad, setIsInitialLoad] = useState<boolean>(true);
+  const fleetDataRef = useRef<FleetData>(fleetData);
+  fleetDataRef.current = fleetData;
 
-  // useEffect never uses ssr. localStorage only available on client
+  const setFleetDataMerge = (newData: FleetData) => {
+    const updated = { ...(fleetDataRef?.current || {}) };
+    Object.entries(newData).forEach(([vin, data]) => {
+      updated[vin] = updated[vin] || data;
+    });
+    setFleetData(updated);
+  }
+
   useEffect(() => {
     (async () => {
-      const data = await dataStore.loadData();
-      setFleetData(data.fleetData);
-      setServerData(data.serverData);
+      await dataStore.loadData(setFleetDataMerge);
       setIsLoading(false);
     })();
   }, []);
@@ -44,9 +47,9 @@ const ContextProvider = ({
     }
 
     (async () => {
-      await dataStore.saveData(fleetData, serverData);
+      await dataStore.saveData(fleetData);
     })();
-  }, [fleetData, serverData]);
+  }, [fleetData, isLoading]);
 
   const setData = (vin: string, updated: KeyData) => {
     setFleetData((d) => ({
@@ -82,27 +85,10 @@ const ContextProvider = ({
     setData(vin, { [field]: { shiftState: value } });
   };
 
-  const setChargeState = (vin: string, field: string, value: ChargeState) => {
-    setData(vin, { [field]: { chargeState: value } });
-  };
-
-  const newVehicle = (vin: string, cert: string, key: string) => {
+  const newVehicle = (vin: string) => {
     setFleetData((d) => ({
       ...d,
-      [vin]: { data: {}, key, cert },
-    }));
-  };
-
-  const setKey = (vin: string, key: string) => {
-    setFleetData((d) => ({
-      ...d,
-      [vin]: { ...d[vin], key },
-    }));
-  };
-  const setCert = (vin: string, cert: string) => {
-    setFleetData((d) => ({
-      ...d,
-      [vin]: { ...d[vin], cert },
+      [vin]: { data: {} },
     }));
   };
 
@@ -115,27 +101,27 @@ const ContextProvider = ({
     });
   };
 
-  const configureServer = (host: string, port: string) => {
-    setServerData({ host, port });
-  };
+  const deleteByVin = (vin: Vin) => {
+    setFleetData(d => {
+      delete d[vin];
+      return d;
+    });
+    dataStore.deleteByVin(vin);
+  }
 
   return (
     <Context.Provider
-      value={useMemo(() => ({
+      value={{
         fleetData,
         setStringValue,
         setIntValue,
         setFloatValue,
         setShiftState,
-        setChargeState,
-        setKey,
-        setCert,
         newVehicle,
         changeVin,
-        configureServer,
-        server: serverData,
+        deleteByVin,
         isLoading,
-      }), [fleetData, isLoading, serverData])}
+      }}
     >
       {children}
     </Context.Provider>

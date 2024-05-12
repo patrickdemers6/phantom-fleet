@@ -12,9 +12,7 @@ describe('fleet page template', () => {
   it('renders', async () => {
     await act(async () => {
       render(
-        wrapContext(<Fleet>Children</Fleet>, jest.fn(), {
-          fleetData: {},
-        }),
+        wrapContext(<Fleet>Children</Fleet>),
       );
     });
     expect(screen.getByText('Children')).toBeInTheDocument();

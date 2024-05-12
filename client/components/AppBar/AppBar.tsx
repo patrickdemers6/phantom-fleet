@@ -10,6 +10,8 @@ import {
   Typography,
 } from '@mui/material';
 import Drawer from '@mui/material/Drawer';
+import Link from 'next/link';
+import { HOME } from '@/constants/paths';
 
 const drawerWidth = 240;
 
@@ -29,7 +31,7 @@ function AppBar({ right = [], drawerContent, children }: AppBarProps) {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            Phantom Fleet
+            <Link href={HOME} style={{ color: 'white', textDecoration: 'none' }}>Phantom Fleet</Link>
           </Typography>
           <Box>{right}</Box>
         </Toolbar>

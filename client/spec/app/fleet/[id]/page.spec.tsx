@@ -7,11 +7,13 @@ import {
 } from '@testing-library/react';
 import sendData from '@/api/data';
 import { FleetData } from '@/context/types';
+import { MemoryRouterProvider } from 'next-router-mock/MemoryRouterProvider';
 
 jest.mock('../../../../api/data', () => ({
   __esModule: true,
   default: jest.fn(() => Promise.resolve()),
 }));
+jest.mock('next/navigation', () => jest.requireActual('next-router-mock'));
 
 const renderPage = (fleetData: FleetData) => act(async () => render(
   wrapContext(
@@ -19,18 +21,15 @@ const renderPage = (fleetData: FleetData) => act(async () => render(
       <FleetIdPage params={{ id: testVin }} />
     </SnackbarProvider>,
     jest.fn(),
-    {
-      fleetData,
-    },
+    fleetData,
   ),
+  { wrapper: MemoryRouterProvider },
 ));
 
 const vehicle = {
   data: {
     Gear: { shiftState: 2 },
   },
-  key: 'key',
-  cert: 'cert',
 };
 
 describe('page /fleet/[id]', () => {
@@ -55,30 +54,7 @@ describe('page /fleet/[id]', () => {
     });
 
     it('shows vehicle not found', () => {
-      expect(screen.getByText('Vehicle not found.')).toBeInTheDocument();
+      expect(screen.getByText('Vehicle not found')).toBeInTheDocument();
     });
-  });
-
-  describe('pre-send validations', () => {
-    it.each([
-      ['key', '', 'cert'],
-      ['certificate', 'key', ''],
-    ])(
-      'errors when vehicle %s is empty',
-      async (nameInError: string, key: string, cert: string) => {
-        await renderPage({
-          [testVin]: {
-            data: {},
-            key,
-            cert,
-          },
-        });
-
-        act(() => screen.getByText('Send').click());
-        expect(
-          screen.getByText(`Vehicle ${nameInError} is required.`),
-        ).toBeInTheDocument();
-      },
-    );
   });
 });
