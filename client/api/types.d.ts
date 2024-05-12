@@ -1,7 +1,5 @@
 export type VehicleData = {
   txid: string;
-  key: string;
-  cert: string;
   topic: string;
   vin: string;
   device_type: string;

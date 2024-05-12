@@ -3,26 +3,24 @@ interface AppContext {
   setStringValue: (vin: Vin, field: string, value: string) => void;
   setIntValue: (vin: Vin, field: string, value: number | string) => void;
   setFloatValue: (vin: Vin, field: string, value: number | string) => void;
-  setChargeState: (vin: string, field: string, value: ChargeState) => void;
   setShiftState: (vin: string, field: string, value: ShiftState) => void;
-  newVehicle: (vin: Vin, cert: string, key: string) => void;
-  setKey: (vin: Vin, key: string) => void;
-  setCert: (vin: Vin, cert: string) => void;
+  newVehicle: (vin: Vin) => void;
   changeVin: (oldVin: Vin, newVin: Vin) => void;
-  configureServer: (host: string, port: string) => void;
-  server: ServerData | null;
+  deleteByVin: (vin: Vin) => void;
   isLoading: boolean;
 }
 
 export type InitialState = {
   fleetData: FleetData;
-  serverData: ServerData;
   loading: boolean;
 };
 
+type setFleetDataFunction = Dispatch<SetStateAction<FleetData>>
+
 interface DataStore {
-  loadData: () => Promise<{ fleetData: FleetData; serverData: ServerData }>;
-  saveData: (fleetData: FleetData, serverData: ServerData) => Promise<void>;
+  loadData: (setFleetData: setFleetDataFunction) => Promise<void>;
+  saveData: (fleetData: FleetData) => Promise<void>;
+  deleteByVin: (vin: Vin) => Promise<void>
 }
 
 export type Vin = string;
@@ -55,15 +53,14 @@ export type KeyData = {
 
 export type Vehicle = {
   data: KeyData;
-  key: string;
-  cert: string;
 };
 
 export type FleetData = {
   [key: Vin]: Vehicle;
 };
 
-export type ServerData = {
-  host: string;
-  port: string;
+export type Toast = {
+  message: string;
+  severity: string;
+  duration: number;
 };

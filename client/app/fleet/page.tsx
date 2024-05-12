@@ -5,6 +5,7 @@ import { FLEET } from '@/constants/paths';
 import { Box, Typography } from '@mui/material';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
+import SendConfiguration from '@/components/setup/SendConfiguration';
 
 function FleetPage() {
   const { fleetData, isLoading } = useApp();
@@ -30,6 +31,7 @@ function FleetPage() {
       <Typography variant="h6">
         To get started, add a vehicle to your fleet.
       </Typography>
+      <SendConfiguration redirect />
     </Box>
   );
 }

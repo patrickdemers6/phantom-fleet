@@ -11,13 +11,6 @@ const (
 					"port": 4443,
 					"tls_directory": "anything"
 				}
-			},
-			"api": {
-				"port": 3000,
-				"server": {
-					"host": "app",
-					"port": 4443
-				}
 			}
 		}
 	}`
@@ -28,12 +21,8 @@ const (
 			"delay": 10,
 			"server": {
 				"host": "app",
-				"port": 4443,
-				"tls_directory": "anything"
+				"port": 4443
 			}
-		},
-		"api": {
-			"port": 3000
 		}
 	}`
 
@@ -44,12 +33,8 @@ const (
 			"delay": -1,
 			"server": {
 				"host": "app",
-				"port": 4443,
-				"tls_directory": "anything"
+				"port": 4443
 			}
-		},
-		"api": {
-			"port": 3000
 		}
 	}`
 
@@ -60,28 +45,8 @@ const (
 			"delay": 10,
 			"server": {
 				"host": "app",
-				"port": 4443,
-				"tls_directory": "anything"
+				"port": 4443
 			}
-		},
-		"api": {
-			"port": 3000
-		}
-	}`
-
-	missingTlsDirectory = `{
-		"mode": "file",
-		"file": {
-			"path": "test_config.json",
-			"delay": 10,
-			"server": {
-				"host": "app",
-				"port": 4443,
-				"tls_directory": ""
-			}
-		},
-		"api": {
-			"port": 3000
 		}
 	}`
 
@@ -92,12 +57,8 @@ const (
 			"delay": 10,
 			"server": {
 				"host": "app",
-				"port": -4443,
-				"tls_directory": "anything"
+				"port": -4443
 			}
-		},
-		"api": {
-			"port": 3000
 		}
 	}`
 
@@ -108,12 +69,8 @@ const (
 			"delay": 10,
 			"server": {
 				"host": "app",
-				"port": 0,
-				"tls_directory": "anything"
+				"port": 0
 			}
-		},
-		"api": {
-			"port": 3000
 		}
 	}`
 
@@ -124,12 +81,8 @@ const (
 			"delay": 10,
 			"server": {
 				"host": "",
-				"port": 4443,
-				"tls_directory": "anything"
+				"port": 4443
 			}
-		},
-		"api": {
-			"port": 3000
 		}
 	}`
 
@@ -140,12 +93,8 @@ const (
 			"delay": 10,
 			"server": {
 				"host": "app",
-				"port": 4443,
-				"tls_directory": "anything"
+				"port": 4443
 			}
-		},
-		"api": {
-			"port": 0
 		}
 	}`
 
@@ -156,12 +105,8 @@ const (
 			"delay": 10,
 			"server": {
 				"host": "app",
-				"port": 4443,
-				"tls_directory": "anything"
+				"port": 4443
 			}
-		},
-		"api": {
-			"port": -3000
 		}
 	}`
 )

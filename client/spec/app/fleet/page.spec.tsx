@@ -13,9 +13,7 @@ describe('page /fleet', () => {
   it('renders when no vehicles', async () => {
     await act(async () => {
       render(
-        wrapContext(<FleetPage />, jest.fn(), {
-          fleetData: {},
-        }),
+        wrapContext(<FleetPage />),
       );
     });
     expect(
@@ -27,12 +25,8 @@ describe('page /fleet', () => {
     await act(async () => {
       render(
         wrapContext(<FleetPage />, jest.fn(), {
-          fleetData: {
-            [testVin]: {
-              data: { Gear: { intValue: 1 } },
-              key: '',
-              cert: '',
-            },
+          [testVin]: {
+            data: { Gear: { intValue: 1 } },
           },
         }),
       );

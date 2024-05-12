@@ -1,16 +1,16 @@
 "use client";
 import { createContext, useContext } from "react";
 import { AppContext, DataStore } from "./types";
-import LocalStorage from "./localStorage";
 import ContextProvider from "./Context";
+import API from './api'
 
 const context = createContext<AppContext | undefined>(undefined);
 
 const contextProviders = {
-  localStorage: LocalStorage,
+  api: API
 };
 
-type ContextProvider = "localStorage" | "mock";
+type ContextProvider = "api" | "mock";
 
 const ApplicationProvider = ({
   contextProvider,
@@ -46,7 +46,7 @@ const ApplicationProvider = ({
 export const useApp = () => {
   const c = useContext(context);
   if (!c) {
-    throw new Error("useData must be used within a LocalstorageProvider");
+    throw new Error("useData must be used within a ApplicationProvider");
   }
   return c;
 };

@@ -4,7 +4,6 @@ import {
   AppContext,
   DataStore,
   FleetData,
-  ServerData,
   Vehicle,
 } from '@/context/types';
 import {
@@ -30,22 +29,20 @@ function TestComponent({ context, onClick, makeAssertions }: {
   );
 }
 
-type Data = { fleetData?: FleetData; serverData?: ServerData };
-
 describe('Context', () => {
   let ds: DataStore;
   const testWithContext = async (
     onClick: (c: AppContext) => void,
     makeAssertions: (c: AppContext) => void,
-    data: Data = {},
+    data: FleetData = {},
   ) => {
     const context = createContext<AppContext | undefined>(undefined);
     ds = {
-      loadData: jest.fn().mockReturnValue({
-        fleetData: data.fleetData ?? {},
-        serverData: data.serverData ?? { host: '', port: '' },
+      loadData: jest.fn().mockImplementation(async (callback) => {
+        callback(data ?? {});
       }),
       saveData: jest.fn(),
+      deleteByVin: jest.fn(),
     };
 
     render(
@@ -65,33 +62,17 @@ describe('Context', () => {
   it('saveData called once after update', async () => {
     await testWithContext(
       (ctx) => {
-        ctx.configureServer('host2', 'port2');
+        ctx.setIntValue(testVin, 'Odometer', 2);
       },
-      () => { },
+      () => {},
+      { [testVin]: { data: { Odometer: { intValue: 1 } } } },
     );
-    await waitFor(() => expect(ds.saveData).toHaveBeenCalledTimes(1));
-    expect(ds.saveData).toHaveBeenCalledWith(
-      {},
-      { host: 'host2', port: 'port2' },
-    );
-  });
-
-  it('configureServer', async () => {
-    await testWithContext(
-      (ctx) => {
-        ctx.configureServer('host2', 'port2');
-      },
-      (ctx) => {
-        expect(ctx.server).toEqual({ host: 'host2', port: 'port2' });
-      },
-    );
+    expect(ds.saveData).toHaveBeenCalledTimes(1);
   });
 
   it('changeVin', async () => {
     const vehicleData = {
       data: { Gear: { intValue: 1 } },
-      key: '',
-      cert: '',
     };
     await testWithContext(
       (ctx) => {
@@ -101,9 +82,7 @@ describe('Context', () => {
         expect(ctx.fleetData).toEqual({ vin2: vehicleData });
       },
       {
-        fleetData: {
-          vin1: vehicleData,
-        },
+        vin1: vehicleData,
       },
     );
   });
@@ -111,15 +90,13 @@ describe('Context', () => {
   it('newVehicle', async () => {
     await testWithContext(
       (ctx) => {
-        ctx.newVehicle('newVin', 'cert', 'key');
+        ctx.newVehicle('newVin');
       },
       (ctx) => {
         expect(ctx.fleetData).toEqual({
           newVin: {
             data: {
             },
-            key: 'key',
-            cert: 'cert',
           },
         });
       },
@@ -164,28 +141,10 @@ describe('Context', () => {
       (ctx: AppContext) => ctx.setStringValue(testVin, 'VehicleName', 'after'),
     ],
     [
-      'setChargeState',
-      { data: { ChargeState: { chargeState: 1 } } },
-      { data: { ChargeState: { chargeState: 2 } } },
-      (ctx: AppContext) => ctx.setChargeState(testVin, 'ChargeState', 2),
-    ],
-    [
       'setShiftState',
       { data: { Gear: { shiftState: 1 } } },
       { data: { Gear: { shiftState: 2 } } },
       (ctx: AppContext) => ctx.setShiftState(testVin, 'Gear', 2),
-    ],
-    [
-      'setCert',
-      { cert: 'before' },
-      { cert: 'after' },
-      (ctx: AppContext) => ctx.setCert(testVin, 'after'),
-    ],
-    [
-      'setKey',
-      { key: 'before' },
-      { key: 'after' },
-      (ctx: AppContext) => ctx.setKey(testVin, 'after'),
     ],
   ])(
     '%s',
@@ -195,7 +154,7 @@ describe('Context', () => {
       vehicleAfter: Partial<Vehicle>,
       onClick,
     ) => {
-      const defaultVehicle = { key: '', cert: '', data: {} };
+      const defaultVehicle = { data: {} };
       await testWithContext(
         onClick,
         (ctx) => {
@@ -204,9 +163,7 @@ describe('Context', () => {
           });
         },
         {
-          fleetData: {
-            [testVin]: { ...defaultVehicle, ...vehicleBefore },
-          },
+          [testVin]: { ...defaultVehicle, ...vehicleBefore },
         },
       );
     },
@@ -225,9 +182,7 @@ describe('Context', () => {
       action,
       makeAssertions,
       {
-        fleetData: {
-          [testVin]: { data: { Odometer: { intValue: 1 } }, key: '', cert: '' },
-        },
+        [testVin]: { data: { Odometer: { intValue: 1 } } },
       },
     );
   });

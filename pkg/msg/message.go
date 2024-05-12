@@ -38,8 +38,6 @@ type Message struct {
 	CreatedAt  int64  `json:"createdAt"`
 	MessageID  string `json:"messageId"`
 	Data       []Data `json:"data"`
-	Cert       string `json:"cert,omitempty"`
-	Key        string `json:"key,omitempty"`
 }
 
 func LoadFromJson(path string, fs afero.Fs) ([]*Message, error) {

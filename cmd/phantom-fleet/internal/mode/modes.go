@@ -19,7 +19,7 @@ func Run(mode string, c *config.Config) error {
 	case "file":
 		return file.Run(c)
 	case "api":
-		return api.Run(c)
+		return api.Run()
 	default:
 		return fmt.Errorf("invalid mode: %s", mode)
 	}

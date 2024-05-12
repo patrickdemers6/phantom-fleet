@@ -12,10 +12,8 @@ import (
 
 // Config defines the phantom-fleet configuration.
 type Config struct {
-	Provider string          `json:"provider"`
 	Mode     string          `json:"mode"`
 	File     *FileModeConfig `json:"file,omitempty"`
-	API      *APIModeConfig  `json:"api,omitempty"`
 	Fs       afero.Fs
 }
 
@@ -26,18 +24,10 @@ type FileModeConfig struct {
 	Server ServerConfig `json:"server"`
 }
 
-// APIModeConfig defines the configuration for the API source.
-type APIModeConfig struct {
-	Port int `json:"port"`
-	// Server defines initial connection configuration, but can be changed for api at runtime.
-	Server ServerConfig `json:"server"`
-}
-
-// ServerConfig represents the server configuration.
+// ServerConfig represents the fleet-telemetry server.
 type ServerConfig struct {
 	Host         string `json:"host,omitempty"`
 	Port         int    `json:"port,omitempty"`
-	TlsDirectory string `json:"tls_directory,omitempty"`
 }
 
 // LoadConfig reads the configuration.
@@ -56,7 +46,7 @@ func LoadConfig(fs afero.Fs) (*Config, error) {
 	}
 
 	if configFile == "" {
-		configFile = "./config.json"
+		configFile = "config.json"
 	}
 
 	file, err := fs.Open(configFile)
@@ -109,12 +99,6 @@ func processArgs(config *Config) error {
 			} else {
 				return fmt.Errorf("expected message name or path to message file")
 			}
-		} else if config.Mode == "api" {
-			if config.API == nil {
-				config.API = &APIModeConfig{
-					Port: 8080,
-				}
-			}
 		}
 	} else if config.Mode == "" {
 		config.Mode = "api"
@@ -123,29 +107,22 @@ func processArgs(config *Config) error {
 }
 
 func (c *Config) Validate() error {
-	if c.File.Server.TlsDirectory == "" {
-		return fmt.Errorf("file mode tls directory is required")
-	}
-	if c.File.Server.Port == 0 {
-		return fmt.Errorf("server port is required")
-	}
-	if c.File.Server.Port < 0 {
-		return fmt.Errorf("server port must be positive")
-	}
-	if c.File.Server.Host == "" {
-		return fmt.Errorf("host is required")
-	}
-	if c.File != nil && c.File.Delay < 0 {
-		return fmt.Errorf("delay must be positive")
-	}
-	if c.API != nil && c.API.Port == 0 {
-		return fmt.Errorf("api port is required")
-	}
-	if c.API != nil && c.API.Port < 0 {
-		return fmt.Errorf("api port must be positive")
-	}
-	if c.Mode != "api" && c.Mode != "file" {
+	if c.Mode != "file" && c.Mode != "api" {
 		return fmt.Errorf("invalid mode, expected 'api' or 'file'")
+	}
+	if c.File != nil {
+		if c.File.Server.Port == 0 {
+			return fmt.Errorf("server port is required")
+		}
+		if c.File.Server.Port < 0 {
+			return fmt.Errorf("server port must be positive")
+		}
+		if c.File.Server.Host == "" {
+			return fmt.Errorf("host is required")
+		}
+		if c.File.Delay < 0 {
+			return fmt.Errorf("delay must be positive")
+		}
 	}
 	return nil
 }

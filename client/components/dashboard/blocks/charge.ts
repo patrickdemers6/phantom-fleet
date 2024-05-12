@@ -1,9 +1,9 @@
 const chargeStates: FieldOption[] = [
-  { name: 'Disconnected', shortName: 'Disconnected', value: 1 },
+  { name: 'Disconnected', shortName: 'Disconnected', value: '1' },
   {
     name: 'Charging',
     shortName: 'Charging',
-    value: 4,
+    value: '4',
     items: [
       {
         title: 'Amps',
@@ -19,11 +19,11 @@ const chargeStates: FieldOption[] = [
       },
     ],
   },
-  { name: 'Complete', shortName: 'Complete', value: 5 },
-  { name: 'Starting', shortName: 'Starting', value: 3 },
-  { name: 'Stopped', shortName: 'Stopped', value: 6 },
-  { name: 'No Power', shortName: 'No Power', value: 2 },
-  { name: 'Unknown', shortName: 'Unknown', value: 0 },
+  { name: 'Complete', shortName: 'Complete', value: '5' },
+  { name: 'Starting', shortName: 'Starting', value: '3' },
+  { name: 'Stopped', shortName: 'Stopped', value: '6' },
+  { name: 'No Power', shortName: 'No Power', value: '2' },
+  { name: 'Unknown', shortName: 'Unknown', value: '0' },
 ];
 
 const charge = {
@@ -35,8 +35,8 @@ const charge = {
         menuItems: chargeStates,
       },
       field: 'ChargeState',
-      fieldType: 'chargeState',
-      defaultValue: 0,
+      fieldType: 'stringValue',
+      defaultValue: '0',
     },
   ],
 };

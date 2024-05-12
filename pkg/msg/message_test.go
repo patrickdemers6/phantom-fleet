@@ -6,7 +6,7 @@ import (
 	message "phantom-fleet/pkg/msg"
 	"phantom-fleet/test/data"
 
-	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
 )

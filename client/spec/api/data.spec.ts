@@ -14,12 +14,9 @@ describe('data api', () => {
           intValue: 3,
         },
       },
-      key: 'key',
-      cert: 'cert',
     });
     Sinon.assert.calledOnce(stub);
     expect(JSON.parse(stub.firstCall.args[1]?.body?.toString() || '')).toEqual({
-      cert: 'cert',
       data: [{ key: 'Gear', value: { intValue: 3 } }],
       messageId: 'msg-0',
       createdAt: 100,
@@ -27,7 +24,6 @@ describe('data api', () => {
       topic: 'V',
       vin: testVin,
       device_type: 'vehicle_device',
-      key: 'key',
     });
   });
 

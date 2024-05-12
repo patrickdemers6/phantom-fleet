@@ -45,3 +45,5 @@ jest.mock('@mui/material/Slider', () => (props: SliderProps & { 'data-testid': s
     />
   );
 });
+
+window.structuredClone = (val) => JSON.parse(JSON.stringify(val));
