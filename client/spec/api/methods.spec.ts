@@ -7,7 +7,7 @@ describe('api methods', () => {
     it('makes request', async () => {
       const reqBody = { foo: 'bar' };
       const resBody = { bar: 'baz' };
-      fetchMock.mockOnceIf('http://localhost:8080/path', async (req) => {
+      fetchMock.mockOnceIf('http://localhost:8080/api/1/path', async (req) => {
         expect(req.method).toEqual('POST');
         expect(req.headers.get('Content-Type')).toEqual('application/json');
         expect(await req.json()).toMatchObject(reqBody);

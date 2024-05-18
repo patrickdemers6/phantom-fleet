@@ -7,9 +7,3 @@ More documentation to come.
 ![](./.assets/configuration_page.png)
 
 ![](./.assets/vehicle_dashboard.png)
-
-## Configuration
-
-**Environment Variables**:
-
-- `NEXT_PUBLIC_PHANTOM_FLEET_API_URL`: the URL the phantom-fleet API is exposed on

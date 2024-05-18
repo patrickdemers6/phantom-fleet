@@ -1,5 +1,3 @@
-
-
 const baseUrl = 'http://localhost:8080';
 const path = '/api/1/vehicles/fleet_telemetry_config'
 export const sendFleetTelemetryConfig = [

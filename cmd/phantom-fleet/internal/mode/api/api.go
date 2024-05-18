@@ -61,9 +61,9 @@ func contextMiddleware(mux *http.ServeMux, dm *device.Manager, ds database.Datas
 }
 
 func registerHandlers(mux *http.ServeMux) {
-	mux.HandleFunc("/data", handlers.DataHandler)
-	mux.HandleFunc("/status", handlers.StatusHandler)
-	mux.HandleFunc("/certificate_authority", handlers.GetCertificate)
+	mux.HandleFunc("/api/1/data", handlers.DataHandler)
+	mux.HandleFunc("/api/1/status", handlers.StatusHandler)
+	mux.HandleFunc("/api/1/certificate_authority", handlers.GetCertificate)
 	// fleet_telemetry_config endpoints are identical to Fleet API
 	mux.HandleFunc("/api/1/vehicles/fleet_telemetry_config", handlers.SetFleetTelemetryConfigHandler)
 	mux.HandleFunc("/api/1/vehicles/{vin}/fleet_telemetry_config", handlers.FleetTelemetryVehicleHandler)

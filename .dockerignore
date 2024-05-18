@@ -1,3 +1,6 @@
 client
 .github
 .gitignore
+# messages and config are mounted as volumes at runtime
+messages
+config*.json

@@ -49,6 +49,8 @@ func LoadConfig(fs afero.Fs) (*Config, error) {
 		configFile = "config.json"
 	}
 
+	fmt.Println("config file: ", configFile)
+
 	file, err := fs.Open(configFile)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open config file: %v", err)

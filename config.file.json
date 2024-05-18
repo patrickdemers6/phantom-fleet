@@ -1,0 +1,11 @@
+{
+  "mode": "file",
+  "file": {
+    "delay": 1,
+    "path": "./messages/change-vehicle-name.json",
+    "server": {
+      "host": "tesla-telemetry.demerstech.com",
+      "port": 4442
+    }
+  }
+}

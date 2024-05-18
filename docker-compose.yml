@@ -1,27 +1,35 @@
-version: '3.8'
-
 services:
   backend:
     build: .
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./config.example.json:/config/config.json
     environment:
       MONGO_URI: mongodb://mongo:27017
+    volumes:
+      - ./messages:/messages
+      - ./config.json:/config.json
   frontend:
     build: ./client
-    ports:
-      - "3000:3000"
     depends_on:
       - backend
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8080:8080"
+    depends_on:
+      - frontend
+      - backend
+    configs:
+      - source: nginx_config
+        target: /etc/nginx/nginx.conf
   mongo:
     image: mongo
     restart: always
     volumes:
       - mongo_data:/data/db
-    ports:
-      - "27017:27017"
 
 volumes:
   mongo_data:
+
+configs:
+  nginx_config:
+    file: ./nginx.conf
