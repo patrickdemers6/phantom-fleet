@@ -2,44 +2,26 @@
 
 API mode allows for sending data to the fleet-telemetry server through a REST API.
 
-## Config
-
-To be included in the config file:
-
-- `port`: port to expose the API on
-- `server` (optional): host and port to use initially for connection to fleet-telemetry server. If not provided, call the `/config` endpoint after startup to configure host and port
+Example `config.json`:
 
 ```json
 {
-  "api": {
-    "port": 8080,
-    "server": {
-      "host": "app",
-      "port": 4443
-    }
-  }
+  "mode": "api"
 }
 ```
 
 ## Endpoints
 
-### GET /status
+### GET /api/1/status
 Returns OK when server is running.
 
-### POST /config
+### GET /api/1/certificate_authority
+Returns the CA to configure your fleet-telemetry server to use.
 
-Set the host and port of the fleet-telemetry server to connect to. This can be called at any time to update configuration. Any active connections to the previous fleet-telemetry server will be closed.
+### GET /api/1/data
+Get data for all vehicles.
 
-**Example Body**
-
-```json
-{
-    "host": "app",
-    "port": 3000 
-}
-```
-
-### POST /data
+### POST /api/1/data
 Send a message to the fleet-telemetry server. Expects a message as JSON body.
 
 Include `key` and `cert` in the JSON payload of first message for a vehicle. They are used when establishing an mTLS connection. The certificates should match the `vin` specified in the request body. It is recommended to always include key/cert for simplicity.
@@ -49,8 +31,6 @@ Include `key` and `cert` in the JSON payload of first message for a vehicle. The
 ```json
 {
   "txid": "2",
-  "key": "<key>",
-  "cert": "<cert>",
   "topic": "V",
   "vin": "device-1",
   "device_type": "vehicle_device",

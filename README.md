@@ -17,7 +17,7 @@ The steps below will assume you're running phantom-fleet using Docker compose.
 
 ## API Configuration
 
-API mode allows you to use the phantom-fleet frontend to manipulate the virtual vehicles. This mode does not require a configuration file.
+API mode allows you to use the phantom-fleet frontend to manipulate the virtual vehicles. Your `config.json` file only needs to have `{"mode": "api"}` in it.
 
 To stay consistent with Fleet API, you must configure vehicles using an API endpoint identical to Tesla's endpoint.
 
@@ -43,7 +43,7 @@ curl --header 'Content-Type: application/json' \
   'http://localhost:8080/api/1/vehicles/fleet_telemetry_config'
 ```
 
-Now, open the phantom-fleet frontend. Assuming you have a basic setup running: [http://localhost:3000](http://localhost:3000).
+Now, open the phantom-fleet frontend. Typically, available at [http://localhost:8080](http://localhost:8080).
 
 Follow the instructions presented and begin sending data.
 
@@ -60,7 +60,7 @@ File mode requires you specify your fleet-telemetry server's details, in `config
       "path": "./messages/change-vehicle-name.json",
       "delay": 1,
       "server": {
-         "host": "app",
+         "host": "your-domain.com",
          "port": 4443,
       }
    }
@@ -75,7 +75,7 @@ The only phantom-fleet specific configuration setting `tls.ca_file`. When you st
 
 ```json
 {
-  "host": "app",
+  "host": "0.0.0.0",
   "port": 4443,
   "log_level": "info",
   "json_log_enable": true,
@@ -97,6 +97,5 @@ This project is in its early stages and may be unstable.
 
 **Short-term goals**:
 
-- Improve testing
-- Improve documentation for crafting messages
-- Have a web interface to interact with API
+- Support more fields through the UI.
+- General UI improvements.
