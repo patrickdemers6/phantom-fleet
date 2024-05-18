@@ -155,7 +155,8 @@ func (m *Mongo) SaveCA(ca *cert.CA) error {
 	if err != nil {
 		return err
 	}
-	certBytes := ca.Certificate.Raw
+
+	certBytes := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: ca.Certificate.Raw})
 	_, err = m.client.Database(MONGO_DB).Collection(CERT_COLLECTION).InsertOne(context.Background(), bson.M{"identifier": "ROOT_CA", "private_key": privateKeyPem, "certificate": certBytes})
 	return err
 }
@@ -173,10 +174,14 @@ func (m *Mongo) GetCA() (*cert.CA, error) {
 		return nil, err
 	}
 
+	block, _ := pem.Decode(dbCert.Certificate)
+	x509Cert, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		return nil, err
+	}
+
 	return &cert.CA{
-		Certificate: &x509.Certificate{
-			Raw: dbCert.Certificate,
-		},
+		Certificate: x509Cert,
 		PrivateKey: privateKey,
 	}, nil
 }
