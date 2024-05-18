@@ -2,9 +2,6 @@
 /phantom-fleet
 /fleet-telemetry
 
-# config
-config.json
-
 # certs
 test-certs
 
