@@ -147,6 +147,10 @@ export default function GuidedSetupPage() {
                   } as any}
                   language={fleetTelemetryConfig.codeSnippetLanguage}
                 />
+                <Alert severity="warning" sx={{ marginTop: 2 }}>
+                  Streaming from legitimate vehicles will not work while this CA is configured.
+                  Remember to remove `tls.ca_file` when you are connecting to real vehicles.
+                </Alert>
               </Box>
               )
             }
