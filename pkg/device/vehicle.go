@@ -26,7 +26,6 @@ func NewVehicle(vin string, config database.FleetTelemetryConfig, certManager *c
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(cert, vin)
 
 	connection, _ := telemetry.NewConnection(config.Hostname, config.Port, config.CA, *cert)
 
