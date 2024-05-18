@@ -26,6 +26,7 @@ func NewVehicle(vin string, config database.FleetTelemetryConfig, certManager *c
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println(cert, vin)
 
 	connection, _ := telemetry.NewConnection(config.Hostname, config.Port, config.CA, *cert)
 
@@ -52,6 +53,7 @@ func (v *Vehicle) Connect() bool {
 func (v *Vehicle) Publish(msg *message.Message) {
 	if v.Connection == nil {
 		if !v.Connect() {
+			fmt.Println("Failed to connect to vehicle: ", v.Vin)
 			return // connecting failed, cannot publish
 		}
 	}
@@ -64,12 +66,12 @@ func (v *Vehicle) Publish(msg *message.Message) {
 
 func (v *Vehicle) handleError(err error) {
 	errors := v.errors
-	fmt.Println(err)
 	if len(errors) == MaxVehicleErrors {
 		errors = errors[1:]
 	}
-
+	
 	v.errors = append(errors, err)
+	fmt.Println(v.Vin, err)
 }
 
 func (v *Vehicle) Shutdown() {

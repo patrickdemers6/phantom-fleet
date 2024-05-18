@@ -1,10 +1,9 @@
-// TODO: define this through environment variables
-const baseUrl = "http://localhost:8080";
+const base = process.env.NODE_ENV === 'test' ? 'http://localhost:8080/api/1' : '/api/1';
 
 class Methods {
     static async post(path: string, init?: RequestInit) {
         return fetch(
-            `${baseUrl}${path}`,
+            `${base}${path}`,
             {
                 method: "POST",
                 headers: {
@@ -17,7 +16,7 @@ class Methods {
     }
     static async get(path: string, init?: RequestInit) {
         return fetch(
-            `${baseUrl}${path}`,
+            `${base}${path}`,
             {
                 ...(init ?? {}),
             }
@@ -25,7 +24,7 @@ class Methods {
     }
     static async delete(path: string, init?: RequestInit) {
         return fetch(
-            `${baseUrl}${path}`,
+            `${base}${path}`,
             {
                 method: 'DELETE',
                 ...(init ?? {}),

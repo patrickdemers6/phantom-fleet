@@ -40,16 +40,18 @@ func Run(config *config.Config) error {
 
 func sendMessages(manager *device.Manager, messages []*message.Message, config *config.FileModeConfig, ca string, certManager *cert.Manager) error {
 	for i, m := range messages {
-		conn := manager.Get(m.VIN)
-		if conn == nil {
+		vehicle := manager.Get(m.VIN)
+		fmt.Println("Sending message to vehicle: ", m.VIN)
+
+		if vehicle == nil {
 			var err error
-			conn, err = device.NewVehicle(m.VIN, database.FleetTelemetryConfig{Hostname: config.Server.Host, Port: config.Server.Port, CA: ca}, certManager)
+			vehicle, err = device.NewVehicle(m.VIN, database.FleetTelemetryConfig{Hostname: config.Server.Host, Port: config.Server.Port, CA: ca}, certManager)
 			if err != nil {
 				return err
 			}
 		}
 
-		conn.Publish(m)
+		vehicle.Publish(m)
 		if i != len(messages)-1 {
 			time.Sleep(time.Duration(config.Delay) * time.Second)
 		}

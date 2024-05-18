@@ -14,7 +14,7 @@ const API = {
   },
 
   deleteByVin: async (vin: Vin) => {
-    Methods.delete(`/api/1/vehicles/${vin}/fleet_telemetry_config`);
+    Methods.delete(`/vehicles/${vin}/fleet_telemetry_config`);
   }
 };
 

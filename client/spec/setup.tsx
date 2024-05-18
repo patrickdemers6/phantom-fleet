@@ -14,8 +14,6 @@ afterEach(() => {
   Sinon.restore();
 });
 
-process.env.NEXT_PUBLIC_PHANTOM_FLEET_API_URL = 'http://example.com/';
-
 const filteredMessages = [/<html> cannot appear as a child of <div>/];
 
 const { error } = console;
