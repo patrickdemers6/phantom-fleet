@@ -1,3 +1,22 @@
+import js from 'react-syntax-highlighter/dist/cjs/languages/hljs/javascript';
+import json from 'react-syntax-highlighter/dist/cjs/languages/hljs/json';
+import shell from 'react-syntax-highlighter/dist/cjs/languages/hljs/shell';
+import foundation from 'react-syntax-highlighter/dist/cjs/styles/hljs/foundation';
+import python from 'react-syntax-highlighter/dist/cjs/languages/hljs/python';
+
+interface CodeSnippet {
+    registerLanguage: (language: string, code: any) => void;
+}
+
+export const registerLanguages = (syntaxHighlighter: CodeSnippet) => {
+    syntaxHighlighter.registerLanguage('javascript', js);
+    syntaxHighlighter.registerLanguage('json', json);
+    syntaxHighlighter.registerLanguage('shell', shell);
+    syntaxHighlighter.registerLanguage('python', python);
+}
+
+export const theme = foundation;
+
 const baseUrl = 'http://localhost:8080';
 const path = '/api/1/vehicles/fleet_telemetry_config'
 export const sendFleetTelemetryConfig = [
@@ -18,7 +37,7 @@ export const sendFleetTelemetryConfig = [
         }
     }
     '`},
-    { name: 'JavaScript', codeSnippetLanguage: 'js', content: `const BASE_URL = '${baseUrl}';
+    { name: 'JavaScript', codeSnippetLanguage: 'javascript', content: `const BASE_URL = '${baseUrl}';
 
 const setFleetTelemetryConfig = async (vins) => {
     const body = {
