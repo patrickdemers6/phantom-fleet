@@ -1,4 +1,4 @@
-const base = process.env.NODE_ENV === 'test' ? 'http://localhost:8080/api/1' : '/api/1';
+const base = ['development', 'test'].includes(process.env.NODE_ENV) ? 'http://localhost:8080/api/1' : '/api/1';
 
 class Methods {
     static async post(path: string, init?: RequestInit) {
