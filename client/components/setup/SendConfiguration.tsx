@@ -7,14 +7,14 @@ import {
   Typography,
 } from '@mui/material';
 import Link from 'next/link';
-import { sendFleetTelemetryConfig } from '@/constants/code_snippets';
+import { registerLanguages, sendFleetTelemetryConfig, theme } from '@/constants/code_snippets';
 import { useEffect, useState } from 'react';
-import {
-  CopyBlock, dracula,
-} from 'react-code-blocks';
 import { useRouter } from 'next/navigation';
 import { Vin } from '@/context/types';
 import { useApp } from '@/context/ApplicationProvider';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+
+registerLanguages(SyntaxHighlighter);
 
 type SendConfigurationProps = {
   redirect?: boolean;
@@ -59,16 +59,13 @@ const SendConfiguration = (props: SendConfigurationProps) => {
             </Select>
           </FormControl>
         </Box>
-        <Box sx={{ backgroundColor: dracula.backgroundColor }}>
-          <CopyBlock
-            text={sendFleetTelemetryConfig[language].content}
-            theme={dracula}
-            wrapLongLines
-            codeContainerStyle={{ padding: 0 }}
-            customStyle={{ paddingLeft: 24, paddingTop: 16, paddingBottom: 16 } as any}
-            language={sendFleetTelemetryConfig[language].codeSnippetLanguage}
-          />
-        </Box>
+        <SyntaxHighlighter
+          language={sendFleetTelemetryConfig[language].codeSnippetLanguage}
+          style={theme}
+          customStyle={{ marginTop: 0 }}
+        >
+          {sendFleetTelemetryConfig[language].content}
+        </SyntaxHighlighter>
       </Box>
     </Box>
   );

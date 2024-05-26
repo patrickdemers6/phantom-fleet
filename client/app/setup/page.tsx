@@ -19,9 +19,11 @@ import {
   useEffect, useState,
 } from 'react';
 import Methods from '@/api/methods';
-import { CopyBlock, dracula } from 'react-code-blocks';
-import { fleetTelemetryConfig } from '@/constants/code_snippets';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { fleetTelemetryConfig, registerLanguages, theme } from '@/constants/code_snippets';
 import SendConfiguration from '@/components/setup/SendConfiguration';
+
+registerLanguages(SyntaxHighlighter);
 
 const STEP_COUNT = 3;
 enum FleetConfiguredState {
@@ -105,29 +107,18 @@ export default function GuidedSetupPage() {
                   Store this certificate in a file your fleet-telemetry server has access to.
                 </Typography>
                 {ca ? (
-                  <Box sx={{
-                    maxHeight: 300,
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    overflowY: 'scroll',
-                    backgroundColor: '#e9e9e9',
-                    borderRadius: 4,
-                    width: 'fit-content',
-                  }}
+                  <SyntaxHighlighter
+                    language="text"
+                    style={theme}
+                    customStyle={{
+                      padding: 16,
+                      width: 'fit-content',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                    }}
                   >
-                    <CopyBlock
-                      text={ca}
-                      theme={dracula}
-                      wrapLongLines
-                      customStyle={{
-                        paddingLeft: 24,
-                        paddingRight: 24,
-                        paddingTop: 16,
-                        paddingBottom: 16,
-                      } as any}
-                      language="text"
-                    />
-                  </Box>
+                    {ca}
+                  </SyntaxHighlighter>
                 ) : <Skeleton variant="rectangular" height={300} />}
               </Box>
               )
@@ -136,17 +127,9 @@ export default function GuidedSetupPage() {
               step === 1 && (
               <Box>
                 In your server&apos;s config.json, set tls.ca_file to this certificate&apos;s path. Below is a basic configuration file.
-                <CopyBlock
-                  text={fleetTelemetryConfig.text}
-                  theme={dracula}
-                  wrapLongLines
-                  customStyle={{
-                    paddingLeft: 24,
-                    paddingTop: 16,
-                    paddingBottom: 16,
-                  } as any}
-                  language={fleetTelemetryConfig.codeSnippetLanguage}
-                />
+                <SyntaxHighlighter language={fleetTelemetryConfig.codeSnippetLanguage} style={theme}>
+                  {fleetTelemetryConfig.text}
+                </SyntaxHighlighter>
                 <Alert severity="warning" sx={{ marginTop: 2 }}>
                   Streaming from legitimate vehicles will not work while this CA is configured.
                   Remember to remove `tls.ca_file` when you are connecting to real vehicles.
