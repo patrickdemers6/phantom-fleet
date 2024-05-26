@@ -95,6 +95,8 @@ The only phantom-fleet specific configuration setting `tls.ca_file`. When you st
 
 This project is in its early stages and may be unstable.
 
+If you are interested in contributing, please see our [contributor's guide](./CONTRIBUTING.md).
+
 **Short-term goals**:
 
 - Support more fields through the UI.
